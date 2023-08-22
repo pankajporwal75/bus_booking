@@ -1,0 +1,30 @@
+<section class="user">
+  <h1><%= current_user.name %></h1>
+  <h5><%=mail_to(current_user.email) %></h5>
+  <h4>Member Since
+    <%= current_user.created_at.strftime("%B %Y") %>
+  </h4>
+  <div class="actions">
+    <%= link_to "Edit Account", edit_user_registration_path, class: "button edit" %>
+  </div>
+  <% if @bookings.present? %>
+    <h3>Bookings</h3>
+    <% @bookings.each do |ticket| %>
+      <div class="review">
+        <div class="details">
+          <span class="title">
+            <%= ticket.bus.source %> to <%= ticket.bus.destination %>
+          </span>
+          <br>
+          <span class="date">
+            Date: <%= ticket.bus.journey_date.strftime("%d %b, %Y") %> <br>
+            Bus Number: <%= ticket.bus.bus_number %>
+          </span>
+          <p>
+            Number of Seats: <%= ticket.seats %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+    <% end %>
+  </section>

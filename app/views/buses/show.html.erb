@@ -1,0 +1,7 @@
+<%= link_to "<- Back to All Buses", buses_path %>
+<h1><%= @bus.owner %></h1>
+<h3><%= @bus.source %> to <%= @bus.destination %></h3>
+<p>Bus Number: <%= @bus.bus_number %></p>
+<p>Date: <%= @bus.journey_date.strftime("%d %b, %Y") %>, <%= @bus.depart_time.strftime("%I:%M %p") %></p>
+<p>Seats: Available</p>
+<%= link_to "Book Now", new_bus_booking_path(@bus) %>

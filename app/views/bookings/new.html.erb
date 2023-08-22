@@ -1,0 +1,10 @@
+<h1>Create New Booking</h1>
+<h1><%= @bus.owner %></h1>
+<h2> <%= @bus.source %> to <%= @bus.destination %></h2>
+<h2>Bus Number: <%= @bus.bus_number %></h2>
+<%= form_with model: [@bus, @booking] do |f| %>
+<%= f.label :seats, "Number of Seats"%>
+<%= f.number_field :seats  %>
+<br>
+<%= f.submit "Book Now" %>
+<% end %>

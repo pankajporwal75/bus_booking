@@ -1,0 +1,13 @@
+<h1>Available Buses</h1>
+<% @buses.each do |bus| %>
+  <ul>
+    <li>
+      <h2><%= bus.source %> to <%= bus.destination %></h2>
+      <h4>Provider: <%= bus.owner %></h4>
+      <p>Date: <%= bus.journey_date.strftime("%d %b, %Y") %>, <%= bus.depart_time.strftime("%I:%M %p") %></p>
+      <p>Seats: Available</p>
+      <%= link_to "Show Details", bus_path(bus) %>
+    </li>
+  </ul>
+  <br>
+<% end %>
