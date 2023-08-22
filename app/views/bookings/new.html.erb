@@ -1,5 +1,5 @@
 <h1>Create New Booking</h1>
-<h1><%= @bus.owner %></h1>
+<h1><%= @bus.bus_owner.name %></h1>
 <h2> <%= @bus.source %> to <%= @bus.destination %></h2>
 <h2>Bus Number: <%= @bus.bus_number %></h2>
 <%= form_with model: [@bus, @booking] do |f| %>

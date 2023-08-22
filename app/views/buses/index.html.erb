@@ -1,13 +1,38 @@
 <h1>Available Buses</h1>
-<% @buses.each do |bus| %>
-  <ul>
-    <li>
-      <h2><%= bus.source %> to <%= bus.destination %></h2>
-      <h4>Provider: <%= bus.owner %></h4>
-      <p>Date: <%= bus.journey_date.strftime("%d %b, %Y") %>, <%= bus.depart_time.strftime("%I:%M %p") %></p>
-      <p>Seats: Available</p>
-      <%= link_to "Show Details", bus_path(bus) %>
-    </li>
-  </ul>
-  <br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">S No.</th>
+      <th scope="col">Provider</th>
+      <th scope="col">Source</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Date</th>
+      <th scope="col">Time</th>
+      <th scope="col">Seats</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <% @buses.each do |bus| %>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td><%= bus.bus_owner.name %></td>
+        <td><%= bus.source %></td>
+        <td><%= bus.destination %></td>
+        <td><%= bus.journey_date.strftime("%d %b, %Y") %></td>
+        <td><%= bus.depart_time.strftime("%I:%M %p") %></td>
+        <% if available_seats(bus)<=0 %>
+          <td>Sold Out</td>
+        <% else %>
+          <td><%=bus.capacity - @occupied %> Available</td>
+        <% end %>
+        <td><%= link_to "Show Details", bus_path(bus), class: "btn btn-primary" %></td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+<% if user_signed_in? %>
+  <% if current_user.busowner? %>
+    <%= link_to "Add New Bus", new_bus_path, class: "btn btn-primary" %>
+  <% end %>
 <% end %>
