@@ -1,3 +1,6 @@
 class Bus < ApplicationRecord
-    has_many :bookings
+    belongs_to :bus_owner
+    has_many :bookings, dependent: :destroy
+
+    
 end

@@ -8,7 +8,8 @@ class BookingsController < ApplicationController
     end
 
     def index
-        @bookings = Booking.all
+        @bus = Bus.find(params[:bus_id])
+        @bookings = @bus.bookings.all
     end
 
     def create

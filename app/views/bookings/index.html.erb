@@ -1,0 +1,22 @@
+<%= link_to "<- Back", bus_path(@bus) %>
+<h1>Reservations for <%= @bus.bus_number %></h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">S No.</th>
+      <th scope="col">User</th>
+      <th scope="col">Date</th>
+      <th scope="col">Number of Seats</th>
+    </tr>
+  </thead>
+  <% @bookings.each do |booking| %>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td><%= booking.user.name %></td>
+        <td><%= booking.bus.journey_date.strftime("%d %b, %Y") %></td>
+        <td><%= booking.seats %></td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

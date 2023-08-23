@@ -4,9 +4,9 @@
     <ul class = "left">
     </ul>
     <ul class = "right">
-      <% if current_user %>
+      <% if user_signed_in? %>
         <li>
-        <%= link_to current_user.name.split[0], current_user %>
+        <%# <%= link_to current_user.name.split[0], current_user %>
         </li>
         <li>
           <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
