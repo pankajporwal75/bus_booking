@@ -1,0 +1,17 @@
+<h1>Bus Owner Registration</h1>
+<%= form_with model: @bus_owner do |form| %>
+  <%= form.label :name, "Bus Service Name" %>
+  <%= form.text_field :name %>
+  <%= form.label :email %>
+  <%= form.text_field :email %>
+  <%= form.label :password %>
+  <%= form.password_field :password %>
+  <%= form.label :password_confirmation, "Confirm Password" %>
+  <%= form.password_field :password_confirmation %>
+  <% if @bus_owner.new_record? %>
+    <%= form.submit "Create Account"%>
+  <% else %>
+    <%= form.submit "Update Account" %>
+  <% end %>
+<%end %>
+<br>

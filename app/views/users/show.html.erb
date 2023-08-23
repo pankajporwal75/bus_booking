@@ -7,9 +7,9 @@
   <div class="actions">
     <%= link_to "Edit Account", edit_user_registration_path, class: "button edit" %>
   </div>
-  <% if @bookings.present? %>
-    <h3>Bookings</h3>
-    <% @bookings.each do |ticket| %>
+  <% if @reservations.present? %>
+    <h3>Reservations</h3>
+    <% @reservations.each do |ticket| %>
       <div class="review">
         <div class="details">
           <span class="title">
@@ -24,6 +24,7 @@
             Number of Seats: <%= ticket.seats %>
           </p>
         </div>
+        <%= button_to "Cancel Reservation", user_reservation_path(current_user,ticket), method: :delete, class: "btn btn-primary" %>
       </div>
     <% end %>
     <% end %>

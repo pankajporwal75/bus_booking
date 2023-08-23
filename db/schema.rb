@@ -10,18 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_120718) do
-  create_table "bookings", force: :cascade do |t|
-    t.date "date"
-    t.time "time"
-    t.integer "seats"
-    t.integer "bus_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.index ["bus_id"], name: "index_bookings_on_bus_id"
-  end
-
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_083111) do
   create_table "buses", force: :cascade do |t|
     t.string "source"
     t.string "destination"
@@ -33,6 +22,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_120718) do
     t.integer "capacity"
     t.integer "bus_owner_id", null: false
     t.index ["bus_owner_id"], name: "index_buses_on_bus_owner_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.integer "seats"
+    t.integer "bus_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["bus_id"], name: "index_reservations_on_bus_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,6 +47,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_120718) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "bookings", "buses"
   add_foreign_key "buses", "users", column: "bus_owner_id"
+  add_foreign_key "reservations", "buses"
 end

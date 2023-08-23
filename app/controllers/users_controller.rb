@@ -3,6 +3,6 @@ class UsersController < ApplicationController
     before_action :authenticate_user!
 
     def show
-        @bookings = current_user.bookings
+        @reservations = current_user.reservations
     end
 end

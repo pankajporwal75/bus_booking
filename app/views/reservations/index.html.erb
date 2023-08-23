@@ -9,13 +9,13 @@
       <th scope="col">Number of Seats</th>
     </tr>
   </thead>
-  <% @bookings.each do |booking| %>
+  <% @reservations.each do |reservation| %>
     <tbody>
       <tr>
         <th scope="row">1</th>
-        <td><%= booking.user.name %></td>
-        <td><%= booking.bus.journey_date.strftime("%d %b, %Y") %></td>
-        <td><%= booking.seats %></td>
+        <td><%= reservation.user.name %></td>
+        <td><%= reservation.bus.journey_date.strftime("%d %b, %Y") %></td>
+        <td><%= reservation.seats %></td>
       </tr>
     </tbody>
   <% end %>
