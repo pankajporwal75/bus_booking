@@ -9,7 +9,7 @@ class ReservationsController < ApplicationController
 
     def index
         @bus = Bus.find(params[:bus_id])
-        @reservations = @bus.reservations.all
+        @reservations = @bus.reservations
     end
 
     def create
@@ -25,8 +25,11 @@ class ReservationsController < ApplicationController
 
     def destroy
         @reservation = Reservation.find(params[:id])
-        @reservation.destroy
-        redirect_to current_user, status: :see_other, notice: "Ticket Cancelled"
+        if @reservation.destroy
+            redirect_to current_user, status: :see_other, notice: "Ticket Cancelled"
+        else
+            redirect_to user_path(current_user), status: :see_other, notice: "Ticket cannot be cancelled."
+        end
     end
 
     private
