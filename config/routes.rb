@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "buses#index"
-  resources :bus_owners
-  resources :users do
-    resources :reservations
+  resources :bus_owners do
+    resources :buses
   end
+  resources :users 
   resources :buses do
     resources :reservations
   end

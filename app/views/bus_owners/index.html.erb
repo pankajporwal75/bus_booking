@@ -1,0 +1,21 @@
+<h1>Bus Owners</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">S No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Buses Listed</th>
+    </tr>
+  </thead>
+  <% count = 0 %>
+  <% @owners.each do |owner| %>
+    <tbody>
+      <tr>
+        <% count+=1 %>
+        <th scope="row"><%= count %></th>
+        <td><%= owner.name %></td>
+        <td><%= owner.buses.count %></td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
 
     before_action :authenticate_user!
+    before_action :require_bus_owner, only: [:index]
     
     def new
         @bus = Bus.find(params[:bus_id])

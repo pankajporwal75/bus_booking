@@ -1,5 +1,11 @@
 class BusOwnersController < ApplicationController
 
+    before_action :require_admin, only: [:index]
+
+    def index
+        @owners = BusOwner.all
+    end
+
     def new
         @bus_owner = BusOwner.new
     end

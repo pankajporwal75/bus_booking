@@ -17,10 +17,12 @@
       <% @buses = current_user.buses %>
     <% end %>
   <% end %>
+  <% count = 0 %>
   <% @buses.each do |bus| %>
     <tbody>
       <tr>
-        <th scope="row"></th>
+        <% count+=1 %>
+        <th scope="row"><%= count %></th>
         <td><%= bus.bus_owner.name %></td>
         <td><%= bus.source %></td>
         <td><%= bus.destination %></td>
