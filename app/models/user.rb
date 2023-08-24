@@ -9,6 +9,9 @@ class User < ApplicationRecord
   def busowner?
     type == 'BusOwner'
   end
+  def admin?
+    type == 'Admin'
+  end
   def user?
     type == nil
   end

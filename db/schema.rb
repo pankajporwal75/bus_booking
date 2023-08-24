@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_083111) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_24_092356) do
   create_table "buses", force: :cascade do |t|
     t.string "source"
     t.string "destination"
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_083111) do
     t.datetime "updated_at", null: false
     t.integer "capacity"
     t.integer "bus_owner_id", null: false
+    t.boolean "approved"
     t.index ["bus_owner_id"], name: "index_buses_on_bus_owner_id"
   end
 
