@@ -7,12 +7,12 @@
   <button class="btn btn-primary">Sold Out</button>
 <% else %>
   <p>Seats: <%= available_seats(@bus) %> Available</p>
-  <%= link_to "Book Now", new_bus_booking_path(@bus), class: "btn btn-primary" %>
+  <%= link_to "Book Now", new_bus_reservation_path(@bus), class: "btn btn-primary" %>
 <% end %>
 <% if user_signed_in? %>
-  <% if current_user.busowner? %>
+  <% if @bus.bus_owner == current_user %>
     <%= link_to "Edit Bus", edit_bus_path, class: "btn btn-primary" %>
-    <%= link_to "Show All Reservations", bus_bookings_path(@bus), class: "btn btn-primary" %>
+    <%= link_to "Show All Reservations", bus_reservations_path(@bus), class: "btn btn-primary" %>
     <%= button_to "Cancel Bus", bus_path(@bus), method: :delete, class: "btn btn-primary" %>
   <% end %>
 <% end %>

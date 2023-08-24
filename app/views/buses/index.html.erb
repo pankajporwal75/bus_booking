@@ -1,5 +1,5 @@
 <h1>Available Buses</h1>
-<table class="table">
+<table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">S No.</th>
@@ -12,10 +12,15 @@
       <th scope="col">Action</th>
     </tr>
   </thead>
+  <% if user_signed_in? %>
+    <% if current_user.busowner? %>
+      <% @buses = current_user.buses %>
+    <% end %>
+  <% end %>
   <% @buses.each do |bus| %>
     <tbody>
       <tr>
-        <th scope="row">1</th>
+        <th scope="row"></th>
         <td><%= bus.bus_owner.name %></td>
         <td><%= bus.source %></td>
         <td><%= bus.destination %></td>
