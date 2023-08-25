@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :bus_owners do
     resources :buses
   end
-  resources :users 
+  resources :users do
+    resources :reservations
+  end
   resources :buses do
     resources :reservations
   end
