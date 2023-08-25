@@ -13,7 +13,7 @@ class Bus < ApplicationRecord
 
     scope :upcoming, -> { where("journey_date > ?", Time.now).order("journey_date asc") }
 
-    # def 
-    #     approved == true
-    # end
+    def approved? 
+        approved == true
+    end
 end
