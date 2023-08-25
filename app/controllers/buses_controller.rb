@@ -4,9 +4,9 @@ class BusesController < ApplicationController
     
     def index
         if current_user.user?
-            @buses = Bus.where(approved: true)
+            @buses = Bus.upcoming.where(approved: true)
         else
-            @buses = Bus.all.order(journey_date: :asc)
+            @buses = Bus.upcoming.order(journey_date: :asc)
         end
     end
 
