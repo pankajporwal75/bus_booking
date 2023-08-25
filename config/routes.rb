@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     resources :reservations
   end
 
-  get 'approve/:bus_owner/bus/:id' ,to: "admins#approve" ,as: :approve 
-  get 'disapprove/:bus_owner/bus/:id' ,to: "admins#disapprove" ,as: :disapprove 
+  get 'change_status/:bus_owner/bus/:id' ,to: "admins#change_status" ,as: :change_status
+  # get 'disapprove/:bus_owner/bus/:id' ,to: "admins#disapprove" ,as: :disapprove 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
