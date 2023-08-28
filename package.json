@@ -1,0 +1,11 @@
+{
+  "name": "bus_booking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:pankajporwal75/bus_booking.git",
+  "author": "Pankaj Porwal <pankajporwal75@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.7.0"
+  }
+}
