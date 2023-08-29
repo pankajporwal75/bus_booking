@@ -14,18 +14,16 @@ class AdminsController < ApplicationController
         @bus = Bus.find(params[:id])
         if @bus.approved?
             @bus.disapprove
-            # render json: {approved: @bus.approved?}
             respond_to do |format|
                 format.html {redirect_to buses_path}
-                # format.json {head :no_content}
+                format.json {head :no_content}
                 format.js {render :layout => false}
             end
         else
             @bus.approve
-            # render json: {approved: @bus.approved?}
             respond_to do |format|
                 format.html {redirect_to buses_path}
-                # format.json {head :no_content}
+                format.json {head :no_content}
                 format.js {render :layout => false}
             end
             # redirect_to buses_path

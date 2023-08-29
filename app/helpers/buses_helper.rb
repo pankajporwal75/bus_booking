@@ -1,8 +1,8 @@
 module BusesHelper
     def available_seats(bus)
         @occupied = 0
-        bus.bookings.each do |booking|
-            @occupied+=booking.seats
+        bus.reservations.each do |reservation|
+            @occupied+=reservation.seats
         end
         bus.capacity - @occupied
     end

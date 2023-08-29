@@ -4,12 +4,15 @@
   <h4>Member Since
     <%= current_user.created_at.strftime("%B %Y") %>
   </h4>
+  <% if current_user.admin? %>
+  <%= link_to "Bus Owners", bus_owners_path, class: "btn btn-primary" %>
+  <% end %>
   <div class="actions">
-    <%= link_to "Edit Account", edit_user_registration_path, class: "button edit" %>
+    <%= link_to "Edit Account", edit_user_registration_path, class: "button edit"  unless current_user.admin?%>
   </div>
-  <% if @bookings.present? %>
-    <h3>Bookings</h3>
-    <% @bookings.each do |ticket| %>
+  <% if @reservations.present? %>
+    <h3>Reservations</h3>
+    <% @reservations.each do |ticket| %>
       <div class="review">
         <div class="details">
           <span class="title">
@@ -24,6 +27,7 @@
             Number of Seats: <%= ticket.seats %>
           </p>
         </div>
+        <%= button_to "Cancel Reservation", user_reservation_path(current_user,ticket), method: :delete, class: "btn btn-primary" %>
       </div>
     <% end %>
     <% end %>

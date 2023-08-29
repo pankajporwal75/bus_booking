@@ -1,7 +1,14 @@
 class BusesController < ApplicationController
+
+    before_action :authenticate_user!, only: [:show, :index]
+    # before_action :require_bus_owner, only: [:new, :create, :destroy]
     
     def index
-        @buses = Bus.all
+        if current_user.user?
+            @buses = Bus.upcoming.where(approved: true)
+        else
+            @buses = Bus.upcoming.order(journey_date: :asc)
+        end
     end
 
     def show
@@ -20,6 +27,21 @@ class BusesController < ApplicationController
             redirect_to bus_path(@bus), notice: "Bus Added Successfully"
         else
             render "new", status: :unprocessable_entity
+        end
+    end
+
+    def edit
+        @bus = Bus.find_by(params[:id])
+        authorize @bus
+    end
+
+    def update
+        @bus = Bus.find_by(params[:id])
+        authorize @bus
+        if @bus.update(bus_params)
+            redirect_to @bus, notice: "Bus Updated"
+        else
+            render "edit", status: :unprocessable_entity
         end
     end
 

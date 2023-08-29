@@ -1,10 +1,7 @@
 class Bus < ApplicationRecord
     belongs_to :bus_owner
-    has_many :bookings, dependent: :destroy
+    has_many :reservations, dependent: :destroy
 
-<<<<<<< Updated upstream
-    
-=======
     def approve
         update(approved: true)
     end
@@ -23,5 +20,5 @@ class Bus < ApplicationRecord
     def available_seats
         capacity - reservations.sum(:seats)
     end
->>>>>>> Stashed changes
+
 end

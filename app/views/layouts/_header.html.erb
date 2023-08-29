@@ -1,12 +1,12 @@
 <header>
   <nav>
-    <h1><%= link_to "Bus Booking", buses_path %></h1>
+    <h1><%= link_to "Bus Reservation", buses_path %></h1>
     <ul class = "left">
     </ul>
     <ul class = "right">
       <% if user_signed_in? %>
         <li>
-        <%# <%= link_to current_user.name.split[0], current_user %>
+        <%= link_to current_user.name.split[0], user_path(current_user) %>
         </li>
         <li>
           <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
@@ -17,6 +17,9 @@
         </li>
         <li>
           <%= link_to "Sign Up", new_user_registration_path, class: "button" %>
+        </li>
+        <li>
+          <%= link_to "New Bus Owner", new_bus_owner_path, class: "button" %>
         </li>
       <% end %>
     </ul>
