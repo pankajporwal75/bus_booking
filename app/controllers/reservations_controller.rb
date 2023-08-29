@@ -1,21 +1,28 @@
 class ReservationsController < ApplicationController
 
     before_action :authenticate_user!
-    before_action :require_bus_owner, only: [:index]
+    # before_action :require_bus_owner, only: [:index]
     
-    def new
-        @bus = Bus.find(params[:bus_id])
-        @reservation = @bus.reservations.new
-    end
-
     def index
         @bus = Bus.find(params[:bus_id])
         @reservations = @bus.reservations
+        authorize @reservations
+    end
+
+    def new
+        @bus = Bus.find(params[:bus_id])
+        if @bus.approved?
+            @reservation = @bus.reservations.new
+            authorize @reservation
+        else
+            redirect_to @bus, alert: "Bus not approved!"
+        end
     end
 
     def create
         @bus = Bus.find(params[:bus_id])
         @reservation = @bus.reservations.new(reservation_params)
+        authorize @reservation
         @reservation.user = current_user
         if @reservation.save
             redirect_to buses_path, notice: "Reservation Successful"
