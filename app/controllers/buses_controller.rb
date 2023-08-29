@@ -30,6 +30,17 @@ class BusesController < ApplicationController
         end
     end
 
+    def search
+        # fail
+        date = params[:search_date]
+        if (date.present? && date > Time.now)
+            @date = Date.parse(date)
+            @buses = Bus.where("journey_date = ?", @date)
+        else
+            redirect_to buses_path, alert: "Enter valid date!!"
+        end
+    end
+
     def edit
         @bus = Bus.find_by(params[:id])
         authorize @bus

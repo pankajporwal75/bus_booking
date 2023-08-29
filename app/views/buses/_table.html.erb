@@ -1,0 +1,47 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">S No.</th>
+      <th scope="col">Provider</th>
+      <th scope="col">Source</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Date</th>
+      <th scope="col">Time</th>
+      <th scope="col">Seats</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <% if user_signed_in? %>
+    <% if current_user.busowner? %>
+      <% buses = current_user.buses %>
+    <% end %>
+  <% end %>
+  <% count = 0 %>
+  <% buses.each do |bus| %>
+    <tbody>
+      <tr>
+        <% count+=1 %>
+        <th scope="row"><%= count %></th>
+        <td><%= bus.bus_owner.name %></td>
+        <td><%= bus.source %></td>
+        <td><%= bus.destination %></td>
+        <td><%= bus.journey_date.strftime("%d %b, %Y") %></td>
+        <td><%= bus.depart_time.strftime("%I:%M %p") %></td>
+        <% if available_seats(bus)<=0 %>
+          <td>Sold Out</td>
+        <% else %>
+          <td><%=bus.capacity - @occupied %> Available</td>
+        <% end %>
+        <% if user_signed_in? && current_user.admin? %>
+          <% if bus.approved? %>
+            <td><%= link_to "Disapprove", change_status_path(bus.bus_owner, bus), class: "btn btn-primary statusbtn", remote: true %></td>
+          <% else %>
+            <td><%= link_to "Approve", change_status_path(bus.bus_owner,bus), class: "btn btn-primary statusbtn", remote: true %></td>
+          <% end %>
+        <% else %>
+          <td><%= link_to "Show Details", bus_path(bus), class: "btn btn-primary" %></td>
+        </tr>
+      </tbody>
+    <% end %>
+  <% end %>
+</table>
