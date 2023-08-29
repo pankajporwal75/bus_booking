@@ -1,2 +1,18 @@
 <h1>Create a new bus</h1>
-<%= render "form", bus: @bus %>
+<%= form_with model: @bus do |form| %>
+<%= form.label :source %>
+<%= form.text_field :source %>
+<%= form.label :destination %>
+<%= form.text_field :destination %>
+<%= form.label :bus_number %>
+<%= form.text_field :bus_number %>
+<%= form.label :journey_date %>
+<%= form.date_field :journey_date %>
+<%= form.label :depart_time, "Time" %>
+<%= form.time_field :depart_time %>
+<%= form.label :capacity %>
+<%= form.number_field :capacity %>
+<%= form.submit "Create Bus" %>
+<% end %>
+
+<br>
