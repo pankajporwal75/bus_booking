@@ -5,8 +5,12 @@ class ReservationsController < ApplicationController
     
     def index
         @bus = Bus.find(params[:bus_id])
-        @reservations = @bus.reservations
-        authorize @reservations
+        if(current_user == @bus.bus_owner)
+            @reservations = @bus.reservations
+        else
+            redirect_to bus_path(@bus), alert: "Unauthorized Access"
+        end
+        # authorize @reservations
     end
 
     def new
