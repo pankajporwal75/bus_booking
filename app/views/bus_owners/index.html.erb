@@ -5,7 +5,6 @@
       <th scope="col">S No.</th>
       <th scope="col">Name</th>
       <th scope="col">Buses Listed</th>
-      <th scope="col">Member Since</th>
     </tr>
   </thead>
   <% count = 0 %>
@@ -16,7 +15,6 @@
         <th scope="row"><%= count %></th>
         <td><%= owner.name %></td>
         <td><%= owner.buses.count %></td>
-        <td><%= owner.created_at.strftime("%d %B, %Y") %></td>
       </tr>
     </tbody>
   <% end %>

@@ -11,9 +11,7 @@ class Bus < ApplicationRecord
         reservations.delete_all
     end
 
-    scope :upcoming, -> { where("journey_date > ?", Time.now).order("journey_date asc") }
-
-    def approved? 
-        approved == true
-    end
+    # def 
+    #     approved == true
+    # end
 end
