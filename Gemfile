@@ -75,3 +75,7 @@ end
 gem "devise", "~> 4.9"
 
 gem "pundit", "~> 2.3"
+
+gem "jquery-rails"
+# gem "bootstrap"
+gem "sassc-rails"

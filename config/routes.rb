@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :reservations
   end
 
-  get 'change_status/:bus_owner/bus/:id' ,to: "admins#change_status" ,as: :change_status
+  patch 'change_status/:bus_owner/bus/:id' ,to: "admins#change_status" ,as: :change_status
   get 'search', to: "buses#search", as: :search_buses
   # get 'disapprove/:bus_owner/bus/:id' ,to: "admins#disapprove" ,as: :disapprove 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

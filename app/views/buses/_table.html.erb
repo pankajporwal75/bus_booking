@@ -34,9 +34,9 @@
         <% end %>
         <% if user_signed_in? && current_user.admin? %>
           <% if bus.approved? %>
-            <td><%= link_to "Disapprove", change_status_path(bus.bus_owner, bus), class: "btn btn-primary statusbtn", remote: true %></td>
+            <td><%= link_to "Disapprove", change_status_path(bus.bus_owner, bus), method: :patch,  class: "btn btn-primary statusbtn", id: "first", remote: true %></td>
           <% else %>
-            <td><%= link_to "Approve", change_status_path(bus.bus_owner,bus), class: "btn btn-primary statusbtn", remote: true %></td>
+            <td><%= link_to "Approve", change_status_path(bus.bus_owner,bus), method: :patch,  class: "btn btn-primary statusbtn", id: "second", remote: true %></td>
           <% end %>
         <% else %>
           <td><%= link_to "Show Details", bus_path(bus), class: "btn btn-primary" %></td>
@@ -45,3 +45,17 @@
     <% end %>
   <% end %>
 </table>
+
+<script>
+  // $(document).on('ajax:success', '.statusbtn', function(event) {
+//     var data = event.detail[0];
+//     var button = $(this);
+
+//     button.text(data.message);
+
+//     // Remove the message after a few seconds (optional)
+//     setTimeout(function() {
+//       button.text("Toggle Status");
+//     }, 3000); // Display message for 3 seconds
+//   });
+// </script>
