@@ -15,6 +15,21 @@ $(document).on('ajax:success', '.statusbtn', function (event,data, status) {
     var button = $(this);
     button.text(message);
 });
+
+
+$(document).on('ajax:error', '.statusbtn', function (event,data, status,xhr) {
+    console.log("Ajax not success")
+    console.log(status)
+    console.log(data)
+    console.log(event)
+    console.log(xhr)
+    // var xhr = event.detail[2];
+
+    // Handle the error case here, e.g. show an error message
+    // console.error('AJAX request error:', xhr.status, xhr.statusText);
+});
+
+
 // $(document).on('ajax:success', '#first', function (event) {
 //     var data = event.detail[0];
 //     alert("task done")
