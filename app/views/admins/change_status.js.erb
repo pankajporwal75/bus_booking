@@ -1,0 +1,5 @@
+console.log("#bus-status-<%=@bus.id%>")
+var button = $("#bus-status-<%=@bus.id%>");
+button.text('<%= j @bus.approved? ? "Disapprove" : "Approve" %>');
+alert("Bus Status Changed");
+

@@ -36,9 +36,18 @@ class BusesController < ApplicationController
         if (date.present? && date > Time.now)
             @date = Date.parse(date)
             @buses = Bus.where("journey_date = ?", @date)
+            @message = "Following bus found"
+            respond_to do |format|
+                format.html
+                format.js
+            end
         else
-            redirect_to buses_path, alert: "Enter valid date!!"
+            respond_to do |format|
+                format.html {redirect_to buses_path, alert: "Enter valid date!!"}
+                format.js
+            end
         end
+
     end
 
     def edit
