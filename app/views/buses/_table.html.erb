@@ -26,15 +26,15 @@
           <td><%= bus.bus_owner.name %></td>
           <td><%= bus.source %></td>
           <td><%= bus.destination %></td>
-          <td><%= bus.journey_date.strftime("%d %b, %Y") %></td>
-          <td><%= bus.depart_time.strftime("%I:%M %p") %></td>
+          <td><%= formatted_date(bus.journey_date) %></td>
+          <td><%= formatted_time(bus.depart_time) %></td>
           <% if available_seats(bus)<=0 %>
             <td>Sold Out</td>
           <% else %>
             <td><%=bus.capacity - @occupied %> Available</td>
           <% end %>
           <% if user_signed_in? && current_user.admin? %>
-            <td><%= link_to bus.approved ? "Disapprove" : "Approve", change_status_path(bus.bus_owner, bus), method: :patch,  class: "btn btn-success statusbtn", id: "bus-status-#{bus.id}", remote: true %></td>
+            <td><%= link_to bus.approved ? "Disapprove" : "Approve", change_status_path(bus.bus_owner, bus), method: :patch,  class: "btn btn-primary statusbtn", id: "bus-status-#{bus.id}", remote: true %></td>
           <% else %>
             <td><%= link_to "Show Details", bus_path(bus), class: "btn btn-primary" %></td>
           </tr>
