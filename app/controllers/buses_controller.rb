@@ -73,6 +73,7 @@ class BusesController < ApplicationController
     def destroy
         @owner = current_user
         @bus = @owner.buses.find(params[:id])
+        authorize @bus
         @bus.destroy
         redirect_to buses_path, notice: "Trip Cancelled Successfully"
     end

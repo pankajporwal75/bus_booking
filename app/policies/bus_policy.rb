@@ -28,4 +28,8 @@ class BusPolicy < ApplicationPolicy
     def update?
       user.busowner?
     end
+
+    def destroy?
+      user.busowner?
+    end
 end

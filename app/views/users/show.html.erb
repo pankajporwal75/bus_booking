@@ -21,7 +21,7 @@
             </span>
             <br>
             <span class="date">
-              Date: <%= ticket.bus.journey_date.strftime("%d %b, %Y") %> <br>
+              Date: <%= formatted_date(ticket.bus.journey_date) %> <br>
               Bus Number: <%= ticket.bus.bus_number %>
             </span>
             <p>

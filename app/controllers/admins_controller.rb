@@ -13,7 +13,7 @@ class AdminsController < ApplicationController
     # 
     def change_status
         @bus = Bus.find(params[:id])
-        authorize @bus, :update?
+        authorize @bus, :index?
         if @bus.approved?
             @bus.disapprove
             respond_to do |format|
@@ -22,7 +22,6 @@ class AdminsController < ApplicationController
             end
         else
             @bus.approve
-            message = "Approved"
             respond_to do |format|
                 format.html {redirect_to buses_path}
                 format.js
