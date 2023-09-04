@@ -12,6 +12,8 @@ class Bus < ApplicationRecord
     end
 
     scope :upcoming, -> { where("journey_date > ?", Time.now).order("journey_date asc") }
+    scope :on_date, ->(search_date) {where("journey_date = ?", search_date)}
+    scope :approved, -> {where(approved: true)}
 
     def approved? 
         approved == true

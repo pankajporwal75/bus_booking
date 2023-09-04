@@ -12,11 +12,6 @@
         <th scope="col">Action</th>
       </tr>
     </thead>
-    <% if user_signed_in? %>
-      <% if current_user.busowner? %>
-        <% buses = current_user.buses %>
-      <% end %>
-    <% end %>
     <% count = 0 %>
     <% buses.each do |bus| %>
       <tbody>

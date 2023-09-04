@@ -5,9 +5,13 @@ class BusesController < ApplicationController
     
     def index
         if current_user.user?
-            @buses = Bus.upcoming.where(approved: true)
+            # fail
+            @buses = Bus.approved.upcoming
+        elsif current_user.busowner?
+            # fail
+            @buses = current_user.buses.order(journey_date: :asc)
         else
-            @buses = Bus.upcoming.order(journey_date: :asc)
+            @buses = Bus.upcoming
         end
     end
 
@@ -35,7 +39,7 @@ class BusesController < ApplicationController
         date = params[:search_date]
         if (date.present? && date > Time.now)
             @date = Date.parse(date)
-            @buses = Bus.where("journey_date = ?", @date)
+            @buses = Bus.approved.on_date(@date)
             @message = "Following bus found"
             respond_to do |format|
                 format.html
