@@ -1,4 +1,5 @@
 class AdminsController < ApplicationController
+    before_action :require_admin
 
     # def approve
     #     @bus =Bus.find(params[:id])
@@ -12,6 +13,7 @@ class AdminsController < ApplicationController
     # 
     def change_status
         @bus = Bus.find(params[:id])
+        authorize @bus, :update?
         if @bus.approved?
             @bus.disapprove
             respond_to do |format|

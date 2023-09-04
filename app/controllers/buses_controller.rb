@@ -5,10 +5,8 @@ class BusesController < ApplicationController
     
     def index
         if current_user.user?
-            # fail
             @buses = Bus.approved.upcoming
         elsif current_user.busowner?
-            # fail
             @buses = current_user.buses.order(journey_date: :asc)
         else
             @buses = Bus.upcoming
@@ -17,16 +15,19 @@ class BusesController < ApplicationController
 
     def show
         @bus = Bus.find(params[:id])
+        authorize @bus
     end
 
     def new
         @owner = current_user
-        @bus = @owner.buses.new
+        @bus = Bus.new
+        authorize @bus
     end
 
     def create
         @owner = current_user
         @bus = @owner.buses.new(bus_params)
+        authorize @bus
         if @bus.save
             redirect_to bus_path(@bus), notice: "Bus Added Successfully"
         else
@@ -40,7 +41,7 @@ class BusesController < ApplicationController
         if (date.present? && date > Time.now)
             @date = Date.parse(date)
             @buses = Bus.approved.on_date(@date)
-            @message = "Following bus found"
+            # @message = "Following bus found"
             respond_to do |format|
                 format.html
                 format.js

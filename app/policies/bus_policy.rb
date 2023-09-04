@@ -9,6 +9,10 @@ class BusPolicy < ApplicationPolicy
       user.busowner? || user.admin?
     end
 
+    def show?
+      user.user? || user.busowner? && bus.bus_owner == user
+    end
+
     def new?
       user.busowner?
     end
