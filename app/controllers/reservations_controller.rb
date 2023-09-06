@@ -32,7 +32,8 @@ class ReservationsController < ApplicationController
             authorize @reservation
             @reservation.user = current_user
             if @reservation.save
-                ReservationMailer.with(reservation: @reservation).create_reservation_email.deliver_later
+                ReservationMailer.with(reservation: @reservation).create_reservation_email.deliver_now
+                # ReservationConfirmationJob.perform_later(@reservation)
                 redirect_to buses_path, notice: "Reservation Successful"
             else
                 render "new", status: :unprocessable_entity
