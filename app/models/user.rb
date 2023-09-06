@@ -18,4 +18,14 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, format: { with: /\S+@\S+/ }, uniqueness: {case_sensitive: false}
+  validate :valid_image
+
+
+  def valid_image
+    return unless profile_image.attached?
+    valid_types = ["image/jpeg", "image/png"]
+    unless valid_types.include?(profile_image.blob.content_type)
+      errors.add(:profile_image, "must be a JPEG or PNG")
+    end
+  end
 end
