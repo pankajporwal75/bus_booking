@@ -1,4 +1,5 @@
 <section class="user">
+  <%= profile_image(current_user) %>
   <h1><%= current_user.name %></h1>
   <h5><%=mail_to(current_user.email) %></h5>
   <h4>Member Since
