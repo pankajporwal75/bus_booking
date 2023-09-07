@@ -56,12 +56,13 @@ class BusesController < ApplicationController
     end
 
     def edit
-        @bus = Bus.find_by(params[:id])
+        # fail
+        @bus = Bus.find_by(id: params[:id])
         authorize @bus
     end
 
     def update
-        @bus = Bus.find_by(params[:id])
+        @bus = Bus.find_by(id: params[:id])
         authorize @bus
         if @bus.update(bus_params)
             redirect_to @bus, notice: "Bus Updated"
