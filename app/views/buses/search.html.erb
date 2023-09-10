@@ -1,0 +1,7 @@
+<%= link_to "<- Back to All Buses", buses_path %>
+<% if @buses.present? %>
+  <h1>Available buses for <%= @date.strftime("%d, %b %Y") %></h1>
+  <%= render "table", buses: @buses %>
+<% else %>
+  <h1>No bus available for selected date</h1>
+<% end %>

@@ -16,4 +16,9 @@ class Bus < ApplicationRecord
     def approved? 
         approved == true
     end
+
+    def available_seats
+        capacity - reservations.sum(:seats)
+    end
+
 end

@@ -5,8 +5,12 @@ class ReservationsController < ApplicationController
     
     def index
         @bus = Bus.find(params[:bus_id])
-        @reservations = @bus.reservations
-        authorize @reservations
+        if(current_user == @bus.bus_owner)
+            @reservations = @bus.reservations
+        else
+            redirect_to bus_path(@bus), alert: "Unauthorized Access"
+        end
+        # authorize @reservations
     end
 
     def new
@@ -21,13 +25,20 @@ class ReservationsController < ApplicationController
 
     def create
         @bus = Bus.find(params[:bus_id])
-        @reservation = @bus.reservations.new(reservation_params)
-        authorize @reservation
-        @reservation.user = current_user
-        if @reservation.save
-            redirect_to buses_path, notice: "Reservation Successful"
+        required_seats = params[:reservation][:seats].to_i
+        if (@bus.journey_date > Time.now && required_seats<=@bus.available_seats)
+            @reservation = @bus.reservations.new(reservation_params)
+            authorize @reservation
+            @reservation.user = current_user
+            if @reservation.save
+                redirect_to buses_path, notice: "Reservation Successful"
+            else
+                render "new", status: :unprocessable_entity
+            end
+        # elsif (required_seats>@bus.available_seats)
+        #     render "new", alert: "Selected number of seats not available"
         else
-            render "new", status: :unprocessable_entity
+            redirect_to buses_path, alert: "This bus has already departed!!"
         end
     end
 

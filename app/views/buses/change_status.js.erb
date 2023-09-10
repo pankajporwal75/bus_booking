@@ -1,3 +1,2 @@
-$('.statusbtn').bind('ajax:success', function() {
-$(this).html("Done");
-});
+var button = $('.statusbtn');
+button.text('<%= j @bus.approved? ? "Disapprove" : "Approve" %>');

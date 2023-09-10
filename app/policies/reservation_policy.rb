@@ -7,7 +7,7 @@ class ReservationPolicy < ApplicationPolicy
       @bus = bus
     end
     def index?
-      user = @bus.busowner?
+      user.busowner?
     end
 
     def new?
