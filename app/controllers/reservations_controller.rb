@@ -16,7 +16,7 @@ class ReservationsController < ApplicationController
 
     def new
         @bus = Bus.find(params[:bus_id])
-        if @bus.approved?
+        if @bus.approved!
             @reservation = @bus.reservations.new
             authorize @reservation
         else
@@ -32,8 +32,8 @@ class ReservationsController < ApplicationController
             authorize @reservation
             @reservation.user = current_user
             if @reservation.save
-                ReservationMailer.with(reservation: @reservation).create_reservation_email.deliver_now
-                # ReservationConfirmationJob.perform_later(@reservation)
+                # ReservationMailer.with(reservation: @reservation).create_reservation_email.deliver_now
+                ReservationConfirmationJob.perform_now(@reservation)
                 redirect_to buses_path, notice: "Reservation Successful"
             else
                 render "new", status: :unprocessable_entity
