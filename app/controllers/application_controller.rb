@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user_bus_owner?
-      user_signed_in? && current_user.busowner?
+      user_signed_in? && current_user.bus_owner?
     end
 
     def require_bus_owner

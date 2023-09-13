@@ -5,16 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :reservations, dependent: :destroy
   has_one_attached :profile_image
-  # has_secure_password
-  def busowner?
-    type == 'BusOwner'
-  end
-  def admin?
-    type == 'Admin'
-  end
-  def user?
-    type == nil
-  end
+  has_many :buses, foreign_key: "bus_owner_id", dependent: :destroy
+  enum role: { user: 'user', bus_owner: 'bus_owner', admin: 'admin' }
 
   validates :name, presence: true
   validates :email, format: { with: /\S+@\S+/ }, uniqueness: {case_sensitive: false}
@@ -23,7 +15,7 @@ class User < ApplicationRecord
 
   def valid_image
     return unless profile_image.attached?
-    valid_types = ["image/jpeg", "image/png"]
+    valid_types = ["image/jpeg", "image/png", "image/jpg", "image/webp"]
     unless valid_types.include?(profile_image.blob.content_type)
       errors.add(:profile_image, "must be a JPEG or PNG")
     end

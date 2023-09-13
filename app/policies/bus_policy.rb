@@ -6,30 +6,34 @@ class BusPolicy < ApplicationPolicy
       @bus= bus
     end
     def index?
-      user.busowner? || user.admin?
+      user.bus_owner? || user.admin? || user.user?
     end
 
     def show?
-      user.user? || user.busowner? && bus.bus_owner == user
+      (user.user?) || (user.bus_owner? && bus.bus_owner.id == user.id)
     end
 
     def new?
-      user.busowner?
+      user.bus_owner?
+    end
+
+    def search?
+      record > Time.now
     end
 
     def create?
-      user.busowner?
+      user.bus_owner?
     end
 
     def edit?
-      user.busowner?
+      bus.bus_owner.id == user.id
     end
 
     def update?
-      user.busowner?
+      user.bus_owner?
     end
 
     def destroy?
-      user.busowner?
+      user.bus_owner?
     end
 end

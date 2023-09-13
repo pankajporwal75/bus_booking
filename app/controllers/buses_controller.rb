@@ -1,12 +1,11 @@
 class BusesController < ApplicationController
 
   before_action :authenticate_user!, only: [:show, :index]
-# before_action :require_bus_owner, only: [:new, :create, :destroy]
 
   def index
     if current_user.user?
       @buses = Bus.approved.upcoming
-    elsif current_user.busowner?
+    elsif current_user.bus_owner?
       @buses = current_user.buses.order(journey_date: :asc)
     else
       @buses = Bus.upcoming
@@ -15,18 +14,19 @@ class BusesController < ApplicationController
 
   def show
     @bus = Bus.find(params[:id])
+    @reservations = @bus.reservations
     authorize @bus
   end
 
   def new
-    @owner = current_user
     @bus = Bus.new
     authorize @bus
   end
 
   def create
-    @owner = current_user
-    @bus = @owner.buses.new(bus_params)
+    # @owner = current_user
+    owner = BusOwner.find(current_user.id)
+    @bus = owner.buses.new(bus_params)
     authorize @bus
     if @bus.save
       redirect_to bus_path(@bus), notice: "Bus Added Successfully"
@@ -40,6 +40,7 @@ class BusesController < ApplicationController
     date = params[:search_date]
     if (date.present? && date > Time.now)
       @date = Date.parse(date)
+      authorize @date
       @buses = Bus.approved.on_date(@date)
       # @message = "Following bus found"
       respond_to do |format|
@@ -71,8 +72,8 @@ class BusesController < ApplicationController
   end
 
   def destroy
-    @owner = current_user
-    @bus = @owner.buses.find(params[:id])
+    # @owner = current_user
+    @bus = current_user.buses.find(params[:id])
     authorize @bus
     @bus.destroy
     redirect_to buses_path, notice: "Trip Cancelled Successfully"
