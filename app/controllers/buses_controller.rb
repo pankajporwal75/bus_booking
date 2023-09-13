@@ -40,7 +40,7 @@ class BusesController < ApplicationController
     date = params[:search_date]
     if (date.present? && date > Time.now)
       @date = Date.parse(date)
-      authorize @date
+      authorize current_user, :all_users?
       @buses = Bus.approved.on_date(@date)
       # @message = "Following bus found"
       respond_to do |format|

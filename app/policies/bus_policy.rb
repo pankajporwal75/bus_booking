@@ -34,6 +34,6 @@ class BusPolicy < ApplicationPolicy
     end
 
     def destroy?
-      user.bus_owner?
+      bus.bus_owner.id == user.id
     end
 end
