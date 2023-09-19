@@ -13,6 +13,24 @@ class User < ApplicationRecord
   validate :valid_image
 
 
+  def generate_otp
+    otp = '%06d' % rand(10**6)
+    otp_sent_at = Time.now
+    update(otp: otp, otp_sent_at: otp_sent_at)
+    return otp
+  end
+
+  def valid_otp?(entered_otp)
+    delay = (Time.now - otp_sent_at).minutes
+    return true if entered_otp == self.otp
+  end
+
+  def send_otp_email
+    otp = generate_otp
+    OtpMailer.send_verification_otp(self, otp).deliver_now
+  end
+
+
   def valid_image
     return unless profile_image.attached?
     valid_types = ["image/jpeg", "image/png", "image/jpg", "image/webp"]

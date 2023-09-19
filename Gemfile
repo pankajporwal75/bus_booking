@@ -80,3 +80,4 @@ gem "jquery-rails"
 # gem "bootstrap"
 gem "sassc-rails"
 gem "sidekiq", "~> 7.1"
+gem "letter_opener", group: :development

@@ -1,0 +1,7 @@
+<h1>Verify OTP</h1>
+<%= form_with( url: :user_session, method: :post) do |f| %>
+  <%= f.hidden_field :email, value: @email %>
+  <%= f.label :otp, 'OTP' %>
+  <%= f.text_field :otp, placeholder: "Enter 6 digit OTP" %>
+  <%= f.submit 'Submit' %>
+<% end %>
