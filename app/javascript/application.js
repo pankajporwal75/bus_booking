@@ -7,27 +7,43 @@ import "popper"
 import "bootstrap"
 // import "./add_jquery"
 
-$(document).on('ajax:success', '.statusbtn', function (event,data, status) {
-    console.log("Hello Running")
-    alert("Hello Pankaj")
-    var message = event.detail[0];
-    console.log(message)
-    var button = $(this);
-    button.text(message);
-});
+// $(document).on("click", ".statusbtn", function(){
+//     $.ajax({
+//         url: '/change_status/:id/bus/:id',
+//         success: function(responce){
+//             var data = responce
+//             console.log("success")
+//             console.log(data)
+//         },
+//         error: function(error){
+//             console.log("error")
+//             console.log(error)
+//         }
+//     })
+// })
+
+// $(document).on('ajax:success', '.statusbtn', function (event,data, status,xhr) {
+//     console.log("Hello Running")
+//     alert("Hello Pankaj")
+//     console.log(event)
+//     console.log(xhr)
+//     var data = event.detail[0];
+//     console.log(data)
+//     // var button = $(this);
+//     // button.text(message);
+// });
 
 
-$(document).on('ajax:error', '.statusbtn', function (event,data, status,xhr) {
-    console.log("Ajax not success")
-    console.log(status)
-    console.log(data)
-    console.log(event)
-    console.log(xhr)
-    // var xhr = event.detail[2];
+// $(document).on('ajax:error', '.statusbtn', function (event,data, status,xhr) {
+//     console.log("Ajax not success")
+//     console.log(status)
+//     console.log(data)
+//     console.log(event)
+//     console.log(xhr)
+//     var xhr = event.detail[2];
 
-    // Handle the error case here, e.g. show an error message
-    // console.error('AJAX request error:', xhr.status, xhr.statusText);
-});
+//     console.error('AJAX request error:', xhr.status, xhr.statusText);
+// });
 
 
 // $(document).on('ajax:success', '#first', function (event) {

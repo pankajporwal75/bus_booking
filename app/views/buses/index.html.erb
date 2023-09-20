@@ -1,7 +1,7 @@
 <h2>Search Bus</h2>
 <%= render "search" %>
 <br>
-<h2>Available Buses</h2>
+<h2 class = "heading">Available Buses</h2>
 <%= render "table", buses: @buses %>
 <% if user_signed_in? %>
   <% if current_user.busowner? %>

@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-    before_action :authenticate_user!
+  before_action :authenticate_user!
 
-    def show
-        @reservations = current_user.reservations
-    end
+  def show
+    @reservations = current_user.reservations
+  end
 end
