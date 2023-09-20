@@ -3,7 +3,7 @@
 <h3><%= @bus.source %> to <%= @bus.destination %></h3>
 <p>Bus Number: <%= @bus.bus_number %></p>
 <p>Date: <%= formatted_date(@bus.journey_date) %>, <%= formatted_time(@bus.depart_time) %></p>
-<p>Status: <%= @bus.approved ? "Approved" : "Not Approved"%>
+<p>Status: <%= @bus.approved? ? "Approved" : "Not Approved"%>
 </p>
 <% if available_seats(@bus)<=0 %>
   <button class="btn btn-primary">Sold Out</button>
