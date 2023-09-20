@@ -1,15 +1,16 @@
 class BusesController < ApplicationController
 
-  before_action :authenticate_user!, only: [:show, :index]
+  before_action :authenticate_user!, only: [:show]
 
   def index
-    if current_user.user?
-      @buses = Bus.approved.upcoming
-    elsif current_user.bus_owner?
-      @buses = current_user.buses.order(journey_date: :asc)
-    else
-      @buses = Bus.upcoming
-    end
+    @buses = Bus.approved.upcoming
+    # if current_user.user?
+    #   @buses = Bus.approved.upcoming
+    # elsif current_user.bus_owner?
+    #   @buses = current_user.buses.order(journey_date: :asc)
+    # else
+    #   @buses = Bus.upcoming
+    # end
   end
 
   def show

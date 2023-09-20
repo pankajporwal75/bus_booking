@@ -5,3 +5,8 @@
   <%= f.text_field :otp, placeholder: "Enter 6 digit OTP" %>
   <%= f.submit 'Submit' %>
 <% end %>
+<%= form_with(url: :resend_otp, method: :patch) do |f| %>
+  <h6>Didn't Receive OTP</h6>
+  <%= f.hidden_field :email, value: @email%>
+  <%= f.submit "Resend OTP",class:"btn btn-success w-25" %>
+<% end %>

@@ -9,7 +9,6 @@ class BusOwnersController < ApplicationController
 
   def new
     @bus_owner = BusOwner.new
-    authorize @bus_owner
   end
 
   def create
@@ -28,6 +27,6 @@ class BusOwnersController < ApplicationController
 
   private
   def bus_owner_params
-    params.require(:bus_owner).permit(:name, :email, :password, :password_confirmation)
+    params.require(:bus_owner).permit(:name, :email, :password, :password_confirmation, :role)
   end
 end

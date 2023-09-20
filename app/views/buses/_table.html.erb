@@ -28,13 +28,13 @@
           <% else %>
             <td><%=bus.capacity - @occupied %> Available</td>
           <% end %>
-          <% if policy(current_user).is_admin? %>
+          <% if user_signed_in? && policy(current_user).is_admin? %>
             <td><%= link_to bus.approved? ? "Disapprove" : "Approve", change_status_path(bus.bus_owner, bus), method: :patch,  class: "btn btn-primary statusbtn", id: "bus-status-#{bus.id}", remote: true %></td>
           <% else %>
             <td><%= link_to "Show Details", bus_path(bus), class: "btn btn-primary" %></td>
-          </tr>
-        </tbody>
-      <% end %>
+          <% end %>
+        </tr>
+      </tbody>
     <% end %>
   </div>
 </table>

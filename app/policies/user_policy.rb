@@ -1,4 +1,8 @@
 class UserPolicy < ApplicationPolicy
+
+  def create?
+    user.user? || user.bus_owner?
+  end
   
   def is_bus_owner?
     user.bus_owner?
@@ -12,3 +16,5 @@ class UserPolicy < ApplicationPolicy
     user.user? || user.bus_owner? || user.admin?
   end
 end
+
+# nutan.rawat@indoreinstitute.com

@@ -21,15 +21,14 @@ class User < ApplicationRecord
   end
 
   def valid_otp?(entered_otp)
-    delay = (Time.now - otp_sent_at).minutes
-    return true if entered_otp == self.otp
+    delay = (Time.now - otp_sent_at)
+    return true if (entered_otp == self.otp) && (delay < 15.minutes)
   end
 
   def send_otp_email
     otp = generate_otp
     OtpMailer.send_verification_otp(self, otp).deliver_now
   end
-
 
   def valid_image
     return unless profile_image.attached?
