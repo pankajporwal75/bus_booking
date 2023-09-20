@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello <%= @reservation.user.name %>, Your reservation is cancelled!</h1>
+    <p>
+      We are sad to hear that you cancelled your reservation with BusReservation.com
+    </p>
+    <p>
+      Bus Details: <%= @reservation.bus.bus_owner.name%> - <%= @reservation.bus.bus_number %>.<br>
+    </p>
+    <p>
+      Number of Seats: <%= @reservation.seats%><br>
+    </p>
+    <p>
+    Refund will be disbursed to your bank account in the next 24 hours.
+    </p>
+    <p>
+      Please Log in to BusReservation.com to see more details.
+    </p>
+    <p>Thanks for using, and have a great day!</p>
+  </body>
+</html>

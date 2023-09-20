@@ -1,4 +1,7 @@
 <section class="user">
+  <div class="profile-image">
+    <%= profile_image(current_user) %>
+  </div>
   <h1><%= current_user.name %></h1>
   <h5><%=mail_to(current_user.email) %></h5>
   <h4>Member Since
@@ -21,7 +24,7 @@
             </span>
             <br>
             <span class="date">
-              Date: <%= ticket.bus.journey_date.strftime("%d %b, %Y") %> <br>
+              Date: <%= formatted_date(ticket.bus.journey_date) %> <br>
               Bus Number: <%= ticket.bus.bus_number %>
             </span>
             <p>

@@ -14,7 +14,7 @@
       <tr>
         <th scope="row">1</th>
         <td><%= reservation.user.name %></td>
-        <td><%= reservation.bus.journey_date.strftime("%d %b, %Y") %></td>
+        <td><%= formatted_date(reservation.bus.journey_date) %></td>
         <td><%= reservation.seats %></td>
       </tr>
     </tbody>

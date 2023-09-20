@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello <%= @bus.bus_owner.name %>,</h1>
+    <p>
+      Sorry, Following bus listed by you is disapproved at BusReservation.com
+    </p>
+    <p>
+      Bus Details: <%= @bus.bus_owner.name%> - <%= @bus.bus_number %>.<br>
+    </p>
+    <p>
+      Route: <%= @bus.source%> to <%= @bus.destination %><br>
+    </p>
+    <p>
+      Number of Seats: <%= @bus.capacity%><br>
+    </p>
+    <p>
+      Date: <%= formatted_date(@bus.journey_date)%><br>
+    </p>
+    <p>
+      Please Log in to BusReservation.com to see more details.
+    </p>
+    <p>Thanks for doing business with us, and have a great day!</p>
+  </body>
+</html>
