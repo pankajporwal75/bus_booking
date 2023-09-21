@@ -1,7 +1,5 @@
 class BusOwnersController < ApplicationController
 
-  # before_action :require_admin, only: [:index]
-
   def index
     @owners = User.bus_owner.all
     authorize current_user, policy_class: AdminPolicy

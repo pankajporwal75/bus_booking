@@ -22,13 +22,10 @@ class ReservationsController < ApplicationController
       @reservation.user = current_user
       if @reservation.save
         ReservationMailer.with(reservation: @reservation).create_reservation_email.deliver_now
-        # ReservationConfirmationJob.perform_now(@reservation)
         redirect_to buses_path, notice: "Reservation Successful"
       else
         render "new", status: :unprocessable_entity
       end
-    # elsif (required_seats>@bus.available_seats)
-    #     render "new", alert: "Selected number of seats not available"
     else
       redirect_to buses_path, alert: "This bus has already departed!!"
     end

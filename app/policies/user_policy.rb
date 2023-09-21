@@ -16,5 +16,3 @@ class UserPolicy < ApplicationPolicy
     user.user? || user.bus_owner? || user.admin?
   end
 end
-
-# nutan.rawat@indoreinstitute.com

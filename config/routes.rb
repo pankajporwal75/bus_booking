@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
   devise_scope :user do
-    get "/otp_verification", to: "users/confirmations#otp_verification", as: :otp_verification
-    post "/verify_otp", to: "users/confirmstions#verify_otp", as: :verify_otp
     patch "/verification", to: "users/sessions#otp_verification", as: :verify_login
     patch "/verificatin/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
   end
@@ -10,8 +8,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations', 
     sessions: "users/sessions",
-    passwords: "users/passwords",
-    confirmations: "users/confirmations"
   }
   root to: "buses#index"
   resources :bus_owners do
