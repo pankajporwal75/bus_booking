@@ -27,7 +27,7 @@ class ReservationsController < ApplicationController
         render "new", status: :unprocessable_entity
       end
     else
-      redirect_to buses_path, alert: "This bus has already departed!!"
+      redirect_to buses_path, alert: "Invalid seat count/This bus has already departed"
     end
   end
 

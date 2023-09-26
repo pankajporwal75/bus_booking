@@ -3,7 +3,17 @@ class BusesController < ApplicationController
   before_action :authenticate_user!, only: [:show]
 
   def index
-    @buses = Bus.approved.upcoming
+    if user_signed_in?
+      if current_user.admin?
+        @buses = Bus.upcoming
+      elsif current_user.bus_owner?
+        @buses = current_user.buses.upcoming
+      else
+        @buses = Bus.approved.upcoming
+      end
+    else
+      @buses = Bus.approved.upcoming
+    end
   end
 
   def show
