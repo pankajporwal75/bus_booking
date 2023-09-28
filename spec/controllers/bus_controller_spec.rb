@@ -75,7 +75,7 @@ RSpec.describe BusesController do
       get :search, params: {search_date: '2023-12-31'}, format: :js
     end 
     it {should render_template('search')}
-    it {should route(:get, '/buses/search').to(action: :search)}
+    it {should route(:get, '/search').to(action: :search)}
   end
 
   describe "DELETE #destroy" do

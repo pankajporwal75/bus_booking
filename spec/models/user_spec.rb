@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   describe "Associations" do
-    it {should have_many(:reservations)}  #Not Working
-    it {should have_one_attached(:profile_image)} #Not Working
+    it {is_expected.to have_many(:reservations).dependent(:destroy)}  #Not Working
+    it {is_expected.to have_one_attached(:profile_image)} #Not Working
   end
   
   describe "Validations" do
