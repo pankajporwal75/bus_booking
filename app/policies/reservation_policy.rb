@@ -1,21 +1,16 @@
 class ReservationPolicy < ApplicationPolicy
-  attr_reader :user, :record, :bus
+  attr_reader :user, :record
 
-    # def initialize(user, reservation, bus)
-    #   @user = user
-    #   @reservation= reservation
-    #   @bus = bus
-    # end
     def index?
-      user.busowner? && record.first.bus.bus_owner == user
+      user.bus_owner? && bus.bus_owner.id == user.id
     end
 
     def new?
-      user.busowner? || user.user?
+      (user.bus_owner? || user.user?)
     end
 
     def create?
-      user.busowner? || user.user?
+      user.bus_owner? || user.user?
     end
 
     def edit?

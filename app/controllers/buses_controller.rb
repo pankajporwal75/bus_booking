@@ -1,32 +1,35 @@
 class BusesController < ApplicationController
 
-  before_action :authenticate_user!, only: [:show, :index]
-# before_action :require_bus_owner, only: [:new, :create, :destroy]
+  before_action :authenticate_user!, only: [:show]
 
   def index
-    if current_user.user?
-      @buses = Bus.approved.upcoming
-    elsif current_user.busowner?
-      @buses = current_user.buses.order(journey_date: :asc)
+    if user_signed_in?
+      if current_user.admin?
+        @buses = Bus.upcoming
+      elsif current_user.bus_owner?
+        @buses = current_user.buses.upcoming
+      else
+        @buses = Bus.approved.upcoming
+      end
     else
-      @buses = Bus.upcoming
+      @buses = Bus.approved.upcoming
     end
   end
 
   def show
     @bus = Bus.find(params[:id])
+    @reservations = @bus.reservations
     authorize @bus
   end
 
   def new
-    @owner = current_user
     @bus = Bus.new
     authorize @bus
   end
 
   def create
-    @owner = current_user
-    @bus = @owner.buses.new(bus_params)
+    owner = BusOwner.find(current_user.id)
+    @bus = owner.buses.new(bus_params)
     authorize @bus
     if @bus.save
       redirect_to bus_path(@bus), notice: "Bus Added Successfully"
@@ -36,12 +39,11 @@ class BusesController < ApplicationController
   end
 
   def search
-    # fail
     date = params[:search_date]
     if (date.present? && date > Time.now)
       @date = Date.parse(date)
+      authorize current_user, :all_users?
       @buses = Bus.approved.on_date(@date)
-      # @message = "Following bus found"
       respond_to do |format|
         format.html
           format.js
@@ -55,7 +57,6 @@ class BusesController < ApplicationController
   end
 
   def edit
-    # fail
     @bus = Bus.find_by(id: params[:id])
     authorize @bus
   end
@@ -71,8 +72,7 @@ class BusesController < ApplicationController
   end
 
   def destroy
-    @owner = current_user
-    @bus = @owner.buses.find(params[:id])
+    @bus = current_user.buses.find(params[:id])
     authorize @bus
     @bus.destroy
     redirect_to buses_path, notice: "Trip Cancelled Successfully"

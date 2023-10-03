@@ -4,7 +4,7 @@
 <h2 class = "heading">Available Buses</h2>
 <%= render "table", buses: @buses %>
 <% if user_signed_in? %>
-  <% if current_user.busowner? %>
+  <% if policy(current_user).is_bus_owner? %>
     <%= link_to "Add New Bus", new_bus_path, class: "btn btn-primary" %>
   <% end %>
 <% end %>

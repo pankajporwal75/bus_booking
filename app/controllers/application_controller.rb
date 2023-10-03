@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :profile_image])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :profile_image, :role])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :profile_image])
   end
 
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user_bus_owner?
-      user_signed_in? && current_user.busowner?
+      user_signed_in? && current_user.bus_owner?
     end
 
     def require_bus_owner

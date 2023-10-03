@@ -1,9 +1,8 @@
 class BusOwnersController < ApplicationController
 
-  before_action :require_admin, only: [:index]
-
   def index
-    @owners = BusOwner.all
+    @owners = User.bus_owner.all
+    authorize current_user, policy_class: AdminPolicy
   end
 
   def new
@@ -11,7 +10,7 @@ class BusOwnersController < ApplicationController
   end
 
   def create
-    @bus_owner = BusOwner.new(busowner_params)
+    @bus_owner = BusOwner.new(bus_owner_params)
     if @bus_owner.save
       redirect_to buses_path, notice: "Your Account has been created. Please Sign In"
     else 
@@ -25,7 +24,7 @@ class BusOwnersController < ApplicationController
   end
 
   private
-  def busowner_params
-    params.require(:bus_owner).permit(:name, :email, :password, :password_confirmation)
+  def bus_owner_params
+    params.require(:bus_owner).permit(:name, :email, :password, :password_confirmation, :role)
   end
 end

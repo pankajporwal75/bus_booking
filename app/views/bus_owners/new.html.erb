@@ -2,6 +2,7 @@
 <%= form_with model: @bus_owner do |form| %>
   <%= form.label :name, "Bus Service Name" %>
   <%= form.text_field :name %>
+  <%= form.hidden_field :role, value: :bus_owner %>
   <%= form.label :email %>
   <%= form.text_field :email %>
   <%= form.label :password %>
