@@ -1,4 +1,12 @@
 require 'rails_helper'
+
+RSpec.shared_examples 'a successful request' do
+  it { should respond_with(200) }
+end
+RSpec.shared_examples 'a rendered template' do |template|
+  it { should render_template(template) }
+end
+
 RSpec.describe BusesController do
   let(:user) {create :user}
   let(:admin_user) {create(:user, role: :admin)}
@@ -10,19 +18,19 @@ RSpec.describe BusesController do
       sign_in(user)
       get :index
     end
-    it {should render_template('index')}
+    it_behaves_like 'a rendered template', 'index'
     it {should route(:get, '/').to(action: :index)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
-
+  
   describe "GET #show" do
     before do
       sign_in(user)
       get :show, params: {id: bus.id}
     end
-    it {should render_template('show')}
+    it_behaves_like 'a rendered template', 'show'
     it {should route(:get, '/buses/1').to(action: :show, id: 1)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
   
   describe "GET #new" do
@@ -30,11 +38,11 @@ RSpec.describe BusesController do
       sign_in(bus_owner_user)
       get :new
     end
-    it {should render_template('new')}
+    it_behaves_like 'a rendered template', 'new'
     it {should route(:get, '/buses/new').to(action: :new)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
-
+  
   describe "POST #create" do
     count = Bus.count
     context "with valid parameters" do
@@ -64,9 +72,9 @@ RSpec.describe BusesController do
       sign_in(bus.bus_owner)
       get :edit, params: {id: bus.id}
     end
-    it {should render_template('edit')}
+    it_behaves_like 'a rendered template', 'edit'
     it {should route(:get, '/buses/1/edit').to(action: :edit, id: 1)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
   
   describe "GET #search" do
@@ -74,8 +82,9 @@ RSpec.describe BusesController do
       sign_in(user)
       get :search, params: {search_date: '2023-12-31'}, format: :js
     end 
-    it {should render_template('search')}
+    it_behaves_like 'a rendered template', 'search'
     it {should route(:get, '/search').to(action: :search)}
+    it_behaves_like 'a successful request'
   end
 
   describe "DELETE #destroy" do
