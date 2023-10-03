@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe ReservationsController do
-  let(:disapproved_bus) {create :bus, capacity: 30}
-  let(:approved_bus) {create :bus, status: 'approved', capacity: 30}
+  let(:disapproved_bus) {create(:bus, capacity: 30)}
+  let(:approved_bus) {create(:bus, status: 'approved', capacity: 30)}
   let(:user) {create :user}
   
   describe "GET #new" do
@@ -26,7 +26,7 @@ RSpec.describe ReservationsController do
   describe "POST #create" do
     count = Reservation.count
     context "with valid parameters" do
-      it "creates a new reservation" do
+      it "should create a new reservation" do
         sign_in(user)
         valid_params = attributes_for(:reservation, seats: rand(1..approved_bus.available_seats))
         post :create, params: {bus_id: approved_bus.id, reservation: valid_params}
@@ -36,7 +36,7 @@ RSpec.describe ReservationsController do
       end
     end
     context "with invalid parameters" do
-      it "does not create a new reservation" do
+      it "should not create a new reservation" do
         sign_in(user)
         invalid_params = attributes_for(:reservation, seats: 40)
         post :create, params: {bus_id: approved_bus.id, reservation: invalid_params}
@@ -49,7 +49,7 @@ RSpec.describe ReservationsController do
   
   describe "DELETE #destroy" do
     let(:reservation) {create :reservation, user: user, bus: approved_bus, seats: 5}
-    it "cancels a reservation" do
+    it "should cancel a reservation" do
       sign_in(user)
       expect(Reservation.exists?(reservation.id)).to be true
       delete :destroy, params: {bus_id: reservation.bus.id, id: reservation.id}

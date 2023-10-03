@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   describe "Associations" do
-    it {is_expected.to have_many(:reservations).dependent(:destroy)}  #Not Working
-    it {is_expected.to have_one_attached(:profile_image)} #Not Working
+    it {is_expected.to have_many(:reservations).dependent(:destroy)}
+    it {is_expected.to have_one_attached(:profile_image)}
   end
   
   describe "Validations" do
-    user = FactoryBot.create(:user, role: 'user')
+    let(:user) {create(:user, role: 'user')}
     
     # Shoulda Matchers
     it {should validate_presence_of(:name)}
@@ -16,11 +16,11 @@ RSpec.describe User, type: :model do
     it {should validate_presence_of(:password)}
     it {should validate_uniqueness_of(:email).case_insensitive}
     
-    it "must be a valid user" do
+    it "should be a valid user" do
       expect(user.valid?).to eq(true)
     end
     
-    it "must have a role" do
+    it "should have a role" do
       user = User.create(name: "Mayur", email: "mayur@gmail.com", role: "user")
       expect(user.role).not_to be nil
     end

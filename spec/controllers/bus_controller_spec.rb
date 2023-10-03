@@ -1,9 +1,9 @@
 require 'rails_helper'
 RSpec.describe BusesController do
   let(:user) {create :user}
-  let(:admin_user) {create :user, role: :admin}
-  let(:bus_owner_user) {create :user, role: :bus_owner}
-  let(:bus) {create :bus, bus_owner: bus_owner_user}
+  let(:admin_user) {create(:user, role: :admin)}
+  let(:bus_owner_user) {create(:user, role: :bus_owner)}
+  let(:bus) {create(:bus, bus_owner: bus_owner_user)}
 
   describe "GET #index" do
     before do
@@ -38,7 +38,7 @@ RSpec.describe BusesController do
   describe "POST #create" do
     count = Bus.count
     context "with valid parameters" do
-      it "creates a new bus" do
+      it "should create a new bus" do
         sign_in(bus_owner_user)
         valid_params = {bus: attributes_for(:bus)}
         post :create, params: valid_params
@@ -48,7 +48,7 @@ RSpec.describe BusesController do
       end
     end
     context "with invalid parameters" do
-      it "does not create a new bus" do
+      it "should not create a new bus" do
         sign_in(bus_owner_user)
         invalid_params = {bus: attributes_for(:bus, capacity: nil)}
         post :create, params: invalid_params
@@ -79,8 +79,8 @@ RSpec.describe BusesController do
   end
 
   describe "DELETE #destroy" do
-    let(:newbus) {create :bus, bus_owner: bus_owner_user}
-    it "deletes a bus" do
+    let(:newbus) {create(:bus, bus_owner: bus_owner_user)}
+    it "should delete a bus" do
       sign_in(bus_owner_user)
       expect(Bus.exists?(newbus.id)).to be true
       delete :destroy, params: {id: newbus.id}
