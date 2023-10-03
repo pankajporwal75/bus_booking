@@ -3,7 +3,6 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   def otp_verification
-    console
     @user = User.find_by(email: params[:user][:email])
     @email = params[:user][:email]
     if @user.present? && @user.valid_password?(params[:user][:password])

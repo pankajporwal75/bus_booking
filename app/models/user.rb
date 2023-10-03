@@ -1,18 +1,22 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # Devise for Authentication
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  
+   # Associations
   has_many :reservations, dependent: :destroy
   has_one_attached :profile_image
   has_many :buses, foreign_key: "bus_owner_id", dependent: :destroy
+  
+  # Enum
   enum role: { user: 'user', bus_owner: 'bus_owner', admin: 'admin' }
 
+  # Validations
   validates :name, presence: true
   validates :email, format: { with: /\S+@\S+/ }, uniqueness: {case_sensitive: false}
   validate :valid_image
 
-
+# Methods
   def generate_otp
     otp = '%06d' % rand(10**6)
     otp_sent_at = Time.now

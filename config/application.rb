@@ -11,6 +11,8 @@ module BusBooking
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
     config.active_job.queue_adapter = :sidekiq
+    config.factory_bot.definition_file_paths = [File.expand_path('../factories', __dir__)]
+    config.factory_bot.reject_primary_key_attributes = false
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
