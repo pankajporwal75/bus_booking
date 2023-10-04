@@ -15,25 +15,38 @@
   </div>
   <% if @reservations.present? %>
     <h3>Reservations</h3>
-    <% @reservations.each do |ticket| %>
-      <% if ticket.bus.journey_date > Time.now %>
-        <div class="review">
-          <div class="details">
-            <span class="title">
-              <%= ticket.bus.source %> to <%= ticket.bus.destination %>
-            </span>
-            <br>
-            <span class="date">
-              Date: <%= formatted_date(ticket.bus.journey_date) %> <br>
-              Bus Number: <%= ticket.bus.bus_number %>
-            </span>
-            <p>
-              Number of Seats: <%= ticket.seats %>
-            </p>
-          </div>
-          <%= button_to "Cancel Reservation", user_reservation_path(current_user,ticket), method: :delete, class: "btn btn-primary" %>
-        </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">S No.</th>
+          <th scope="col">Name</th>
+          <th scope="col">Seats</th>
+          <th scope="col">Pick-up</th>
+          <th scope="col">Drop</th>
+          <th scope="col">Created at</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <% count = 0 %>
+      <% @reservations.each do |ticket| %>
+        <% if ticket.bus.journey_date > Time.now %>
+          <tbody>
+            <tr>
+              <% count+=1 %>
+              <th scope="row"><%= count %></th>
+              <td><%= ticket.user.name %></td>
+              <td><%= ticket.seats %></td>
+              <td><%= ticket.bus.source %></td>
+              <td><%= ticket.bus.destination %></td>
+              <td><%= formatted_date(ticket.created_at) %></td>
+              <td><%= button_to "Cancel", user_reservation_path(current_user, ticket), method: :delete, class: "btn btn-primary" %></td>
+            </tr>
+          </tbody>
+        <% end %>
       <% end %>
-    <% end %>
+    </table>
   <% end %>
+  <div class="flickr_pagination">
+    <%= will_paginate @reservations %>
+  </div>
 </section>
