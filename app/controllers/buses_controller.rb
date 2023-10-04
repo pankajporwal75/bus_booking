@@ -19,7 +19,7 @@ class BusesController < ApplicationController
 
   def show
     @bus = Bus.find(params[:id])
-    @reservations = @bus.reservations
+    @reservations = @bus.reservations.paginate(page: params[:page], per_page: 5)
     authorize @bus
   end
 

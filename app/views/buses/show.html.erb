@@ -12,32 +12,49 @@
   <%= link_to "Book Now", new_bus_reservation_path(@bus), class: "btn btn-primary" %>
 <% end %>
 <% if user_signed_in? %>
-  <%# <% if @bus.bus_owner.id == current_user.id %>
   <% if policy(@bus).edit? %>
     <%= link_to "Edit Bus", edit_bus_path, class: "btn btn-primary" %>
     <%= button_to "Cancel Bus", bus_path(@bus), method: :delete, class: "btn btn-primary" %>
-    <section class="user">
-      <% if @reservations.present? %>
-        <h3>Reservations</h3>
+    <br>
+    <br>
+    <% if @reservations.present? %>
+      <h3>Reservations</h3>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">S No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Seats</th>
+            <th scope="col">Pick-up</th>
+            <th scope="col">Drop</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <% count = 0 %>
         <% @reservations.each do |ticket| %>
           <% if ticket.bus.journey_date > Time.now %>
-            <div class="review">
-              <div class="details">
-                <span class="title">
-                  <%= ticket.user.name %>
-                </span>
-                <br>
-                <p>
-                  Number of Seats: <%= ticket.seats %>
-                </p>
-              </div>
-              <%= button_to "Cancel Reservation", user_reservation_path(current_user,ticket), method: :delete, class: "btn btn-primary" %>
-            </div>
+            <tbody>
+              <tr>
+                <% count+=1 %>
+                <th scope="row"><%= count %></th>
+                <td><%= ticket.user.name %></td>
+                <td><%= ticket.seats %></td>
+                <td><%= ticket.bus.source %></td>
+                <td><%= ticket.bus.destination %></td>
+                <td><%= formatted_date(ticket.created_at) %></td>
+                <td><%= button_to "Cancel", user_reservation_path(current_user, ticket), method: :delete, class: "btn btn-primary" %></td>
+              </tr>
+            </tbody>
           <% end %>
         <% end %>
-      <% else %>
-        <h3>No Reservations for this bus yet.</h3>
-      <% end %>
-    </section>
+      </table>
+    <% else %>
+      <h3>No Reservations for this bus yet.</h3>
+    <% end %>
+    <div class="flickr_pagination">
+  <%= will_paginate @reservations %>
+</div>
+
   <% end %>
 <% end %>
