@@ -1,3 +1,8 @@
+<% if user_signed_in? %>
+  <% if policy(current_user).is_admin? %>
+    <%= link_to "<- Back to Dashboard", admin_dashboard_path %>
+  <% end %>
+<% end %>
 <h2>Search Bus</h2>
 <%= render "search" %>
 <br>

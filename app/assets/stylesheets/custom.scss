@@ -662,3 +662,17 @@ section.errors {
 .flickr_pagination .next_page {
   margin-left: 1em;
 }
+
+.container-lg{
+  display: flex;
+  
+}
+.container-lg .container{
+  height: 200px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  padding: 20px;
+  background-color: rgba(255, 181, 181, 0.303);
+  margin-inline: 25px;
+}
