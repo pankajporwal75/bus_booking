@@ -2,21 +2,21 @@
 <div class="container-lg">
   <div class="container">
   <h3>Users</h3>
-  <h1>
+  <h1 class="count">
     <%= @users.count %>
   </h1>
   <%= link_to "View All Users", all_users_path, class: "btn btn-primary" %>
   </div>
   <div class="container">
   <h3>Bus Owners</h3>
-  <h1>
+  <h1 class="count">
     <%= @bus_owners.count %>
   </h1>
   <%= link_to "View All Bus Owners", all_bus_owners_path, class: "btn btn-primary" %>
   </div>
   <div class="container">
   <h3>Buses Listed</h3>
-  <h1>
+  <h1 class="count">
     <%= @buses.count %>
   </h1>
   <%= link_to "View All Buses", all_buses_path, class: "btn btn-primary" %>

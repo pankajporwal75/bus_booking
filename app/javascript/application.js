@@ -5,71 +5,22 @@ import "jquery"
 import "jquery_ujs"
 import "popper"
 import "bootstrap"
-// import "./add_jquery"
 
-// $(document).on("click", ".statusbtn", function(){
-//     $.ajax({
-//         url: '/change_status/:id/bus/:id',
-//         success: function(responce){
-//             var data = responce
-//             console.log("success")
-//             console.log(data)
-//         },
-//         error: function(error){
-//             console.log("error")
-//             console.log(error)
-//         }
-//     })
-// })
-
-// $(document).on('ajax:success', '.statusbtn', function (event,data, status,xhr) {
-//     console.log("Hello Running")
-//     alert("Hello Pankaj")
-//     console.log(event)
-//     console.log(xhr)
-//     var data = event.detail[0];
-//     console.log(data)
-//     // var button = $(this);
-//     // button.text(message);
-// });
+$(function () {
+  $('.count').each(function () {
+    $(this).prop('Counter', 0).animate({
+      Counter: $(this).text()
+    }, {
+      duration: 1000,
+      easing: 'swing',
+      step: function (now) {
+        $(this).text(Math.ceil(now));
+      }
+    });
+  });
+});
 
 
-// $(document).on('ajax:error', '.statusbtn', function (event,data, status,xhr) {
-//     console.log("Ajax not success")
-//     console.log(status)
-//     console.log(data)
-//     console.log(event)
-//     console.log(xhr)
-//     var xhr = event.detail[2];
-
-//     console.error('AJAX request error:', xhr.status, xhr.statusText);
-// });
 
 
-// $(document).on('ajax:success', '#first', function (event) {
-//     var data = event.detail[0];
-//     alert("task done")
-//     console.log(data)
-//     if (data.approved) {
-//         $('.statusbtn').text('Disapprove');
-//     } else {
-//         $('.statusbtn').text('Approve');
-//     }
-// });
-// app/assets/javascripts/buses.js
 
-// $(document).on('ajax:success', '#first, #second', function (event) {
-//     var message = event.detail[0].message;
-//     var button  = $(this);
-//     alert("this code is working")
-
-//     if(data.approved){
-//         button.text("Disapprove")
-//     }
-//     else{
-//         button.text("Approve")
-//     }
-//     // Update the status of the bus listing
-//     // var busListing = $(this).closest('.bus-listing');
-//     // busListing.find('p').text('Status: ' + (data.approved ? 'Approved' : 'Not Approved'));
-// });
