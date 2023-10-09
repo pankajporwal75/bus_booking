@@ -1,15 +1,15 @@
 class ReservationMailer < ApplicationMailer
   default from: 'admin@busreservation.com'
 
-  def create_reservation_email
-    @reservation = params[:reservation]
-    # @reservation = reservation
+  def create_reservation_email(reservation)
+    # @reservation = params[:reservation]
+    @reservation = reservation
     mail(to: @reservation.user.email, subject: 'Reservation Confirmed!')
   end
 
-  def cancel_reservation_email
-    @reservation = params[:reservation]
-    # @reservation = reservation
+  def cancel_reservation_email(reservation)
+    # @reservation = params[:reservation]
+    @reservation = reservation
     mail(to: @reservation.user.email, subject: 'Reservation Cancelled!')
   end
 

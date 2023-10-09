@@ -1,28 +1,36 @@
 require 'rails_helper'
+
+RSpec.shared_examples 'a successful request' do
+  it { should respond_with(200) }
+end
+RSpec.shared_examples 'a rendered template' do |template|
+  it { should render_template(template) }
+end
+
 RSpec.describe BusesController do
-  let(:bus) {create :bus}
   let(:user) {create :user}
-  let(:admin_user) {create :user, role: :admin}
-  let(:bus_owner_user) {create :user, role: :bus_owner}
+  let(:admin_user) {create(:user, role: :admin)}
+  let(:bus_owner_user) {create(:user, role: :bus_owner)}
+  let(:bus) {create(:bus, bus_owner: bus_owner_user)}
 
   describe "GET #index" do
     before do
       sign_in(user)
       get :index
     end
-    it {should render_template('index')}
+    it_behaves_like 'a rendered template', 'index'
     it {should route(:get, '/').to(action: :index)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
-
+  
   describe "GET #show" do
     before do
       sign_in(user)
       get :show, params: {id: bus.id}
     end
-    it {should render_template('show')}
+    it_behaves_like 'a rendered template', 'show'
     it {should route(:get, '/buses/1').to(action: :show, id: 1)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
   
   describe "GET #new" do
@@ -30,15 +38,15 @@ RSpec.describe BusesController do
       sign_in(bus_owner_user)
       get :new
     end
-    it {should render_template('new')}
+    it_behaves_like 'a rendered template', 'new'
     it {should route(:get, '/buses/new').to(action: :new)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
-
+  
   describe "POST #create" do
     count = Bus.count
     context "with valid parameters" do
-      it "creates a new bus" do
+      it "should create a new bus" do
         sign_in(bus_owner_user)
         valid_params = {bus: attributes_for(:bus)}
         post :create, params: valid_params
@@ -48,7 +56,7 @@ RSpec.describe BusesController do
       end
     end
     context "with invalid parameters" do
-      it "does not create a new bus" do
+      it "should not create a new bus" do
         sign_in(bus_owner_user)
         invalid_params = {bus: attributes_for(:bus, capacity: nil)}
         post :create, params: invalid_params
@@ -64,9 +72,9 @@ RSpec.describe BusesController do
       sign_in(bus.bus_owner)
       get :edit, params: {id: bus.id}
     end
-    it {should render_template('edit')}
+    it_behaves_like 'a rendered template', 'edit'
     it {should route(:get, '/buses/1/edit').to(action: :edit, id: 1)}
-    it {should respond_with(200)}
+    it_behaves_like 'a successful request'
   end
   
   describe "GET #search" do
@@ -74,8 +82,19 @@ RSpec.describe BusesController do
       sign_in(user)
       get :search, params: {search_date: '2023-12-31'}, format: :js
     end 
-    it {should render_template('search')}
-    it {should route(:get, '/buses/search').to(action: :search)}
+    it_behaves_like 'a rendered template', 'search'
+    it {should route(:get, '/search').to(action: :search)}
+    it_behaves_like 'a successful request'
+  end
+
+  describe "DELETE #destroy" do
+    let(:newbus) {create(:bus, bus_owner: bus_owner_user)}
+    it "should delete a bus" do
+      sign_in(bus_owner_user)
+      expect(Bus.exists?(newbus.id)).to be true
+      delete :destroy, params: {id: newbus.id}
+      expect(Bus.exists?(newbus.id)).to be false
+    end
   end
   
   describe "permit params" do

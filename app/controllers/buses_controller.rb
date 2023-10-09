@@ -1,6 +1,7 @@
 class BusesController < ApplicationController
 
   before_action :authenticate_user!, only: [:show]
+  protect_from_forgery except: :search
 
   def index
     if user_signed_in?

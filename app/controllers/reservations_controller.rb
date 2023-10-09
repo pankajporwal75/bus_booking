@@ -21,7 +21,7 @@ class ReservationsController < ApplicationController
       authorize current_user
       @reservation.user = current_user
       if @reservation.save
-        ReservationMailer.with(reservation: @reservation).create_reservation_email.deliver_now
+        ReservationMailer.create_reservation_email(@reservation).deliver_now
         redirect_to buses_path, notice: "Reservation Successful"
       else
         render "new", status: :unprocessable_entity
@@ -34,7 +34,7 @@ class ReservationsController < ApplicationController
   def destroy
     @reservation = Reservation.find(params[:id])
     if @reservation.destroy
-      ReservationMailer.with(reservation: @reservation).cancel_reservation_email.deliver_now
+      ReservationMailer.cancel_reservation_email(@reservation).deliver_now
       redirect_to current_user, status: :see_other, notice: "Ticket Cancelled"
     else
       redirect_to user_path(current_user), status: :see_other, notice: "Ticket cannot be cancelled."
