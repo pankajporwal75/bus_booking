@@ -87,3 +87,5 @@ gem "sassc-rails"
 gem "sidekiq", "~> 7.1"
 gem "letter_opener", group: :development
 gem 'faker'
+
+gem "pry", "~> 0.14.2"
