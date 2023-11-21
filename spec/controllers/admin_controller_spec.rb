@@ -4,6 +4,26 @@ RSpec.describe AdminsController do
   let(:bus_owner) {create(:user, role: 'bus_owner')}
   let(:bus) {create(:bus, bus_owner: bus_owner)}
   let(:user) {create :user}
+
+  describe "GET #index" do
+    before do
+      sign_in(admin)
+      get :index
+    end
+    it {should render_template('index')}
+    it 'assigns @buses, @users and @bus_owners' do
+      user1 = create(:user)
+      user2 = create(:user)
+      bus_owner1 = create(:bus_owner)
+      bus_owner2 = create(:bus_owner)
+      bus1 = create(:bus, bus_owner: bus_owner1)
+      bus2 = create(:bus, bus_owner: bus_owner2)
+      expect(assigns(:users)).not_to be_nil
+      expect(assigns(:bus_owners)).not_to be_nil
+      expect(assigns(:buses)).not_to be_nil
+    end
+  end
+
   describe "PATCH #change_status" do
     context "when admin user" do
       it 'should change the status of bus' do
