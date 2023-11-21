@@ -19,7 +19,7 @@ class Users::SessionsController < Devise::SessionsController
     @email = params[:email]
     if user && user.valid_otp?(params[:otp])
       sign_in(user)
-      redirect_to buses_path, notice: "You have now logged in"
+      redirect_to after_sign_in_path_for(user)
     else
       flash.now[:alert] = "Invalid OTP, Please make sure you enter correct OTP"
       render :otp_verification, locals: {email: @email}, status: :unprocessable_entity
@@ -32,6 +32,14 @@ class Users::SessionsController < Devise::SessionsController
     render :otp_verification, locals: { email: @user.email, notice: "A new OTP is sent to your registered email." }
   end
 
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      flash[:notice] = "Welcome Admin"
+      admin_dashboard_path
+    else
+      buses_path
+    end
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])

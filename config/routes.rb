@@ -19,7 +19,10 @@ Rails.application.routes.draw do
   resources :buses do
     resources :reservations
   end
+  get 'admin/dashboard', to: "admins#index", as: :admin_dashboard
+  get 'admin/users', to: "users#index", as: :all_users
   get 'admin/bus_owners', to: "bus_owners#index", as: :all_bus_owners
+  get 'admin/buses', to: "buses#index", as: :all_buses
   patch 'change_status/:bus_owner/bus/:id' ,to: "admins#change_status" ,as: :change_status
   get 'search', to: "buses#search", as: :search_buses
   # get 'disapprove/:bus_owner/bus/:id' ,to: "admins#disapprove" ,as: :disapprove 

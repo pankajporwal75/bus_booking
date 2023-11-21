@@ -6,25 +6,26 @@ class BusesController < ApplicationController
   def index
     if user_signed_in?
       if current_user.admin?
-        @buses = Bus.upcoming
+        @buses = Bus.upcoming.paginate(page: params[:page], per_page: 5)
       elsif current_user.bus_owner?
-        @buses = current_user.buses.upcoming
+        @buses = current_user.buses.upcoming.paginate(page: params[:page], per_page: 5)
       else
-        @buses = Bus.approved.upcoming
+        @buses = Bus.approved.upcoming.paginate(page: params[:page], per_page: 5)
       end
     else
-      @buses = Bus.approved.upcoming
+      @buses = Bus.approved.upcoming.paginate(page: params[:page], per_page: 5)
     end
   end
 
   def show
     @bus = Bus.find(params[:id])
-    @reservations = @bus.reservations
+    @reservations = @bus.reservations.paginate(page: params[:page], per_page: 5)
     authorize @bus
   end
 
   def new
     @bus = Bus.new
+    @bus.depart_time = Time.current.change(hour: 12, min: 0, sec: 0)
     authorize @bus
   end
 

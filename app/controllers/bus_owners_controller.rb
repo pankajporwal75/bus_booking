@@ -1,7 +1,7 @@
 class BusOwnersController < ApplicationController
 
   def index
-    @owners = User.bus_owner.all
+    @owners = User.bus_owner.paginate(page: params[:page], per_page: 5)
     authorize current_user, policy_class: AdminPolicy
   end
 
