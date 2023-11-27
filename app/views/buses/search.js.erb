@@ -1,8 +1,10 @@
 <% if @buses.present? %>
-  <%# var block = $('.data'); %>
   $('.data').empty();
   $('.heading').html("Showing results for <%= j @date.strftime("%d %b,%Y") %>");
   $('.data').html('<%= j render partial: "table", locals: { buses: @buses } %>');
+<% elsif (@date.present? && @date < Date.today) || @date.blank? %>
+  $('.data').empty();
+  $('.heading').html("Invalid Date, Please select an upcoming date.")
 <% else %>
   $('.data').empty();
   $('.heading').html("No Bus Available for the selected date")

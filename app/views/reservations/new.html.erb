@@ -1,10 +1,11 @@
-<h1>Create New Reservation</h1>
-<h1><%= @bus.bus_owner.name %></h1>
-<h2> <%= @bus.source %> to <%= @bus.destination %></h2>
-<h2>Bus Number: <%= @bus.bus_number %></h2>
-<%= form_with model: [@bus, @reservation] do |f| %>
-<%= f.label :seats, "Number of Seats"%>
-<%= f.number_field :seats  %>
-<br>
-<%= f.submit "Book Now" %>
-<% end %>
+<%= link_to sanitize("&larr; Back to Bus"), bus_path(@bus) %>
+<%= render "users/shared/error_messages", resource: @reservation %>
+  <h1>Create New Reservation</h1>
+  <h1><%= @bus.bus_owner.name %></h1>
+  <h2> <%= @bus.source %> to <%= @bus.destination %></h2>
+  <h2>Bus Number: <%= @bus.bus_number %></h2>
+  <%= form_with model: [@bus, @reservation] do |f| %>
+  <%= f.label :seats, "Number of Seats"%>
+  <%= f.number_field :seats  %>
+  <%= f.submit "Book Now", data: {turbo_frame: "_top"} %> 
+  <% end %>

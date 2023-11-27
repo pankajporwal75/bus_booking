@@ -1,16 +1,16 @@
-<%= link_to "<- Back to All Buses", buses_path %>
-<h1><%= @bus.bus_owner.name %></h1>
-<h3><%= @bus.source %> to <%= @bus.destination %></h3>
-<p>Bus Number: <%= @bus.bus_number %></p>
-<p>Date: <%= formatted_date(@bus.journey_date) %>, <%= formatted_time(@bus.depart_time) %></p>
-<p>Status: <%= @bus.approved? ? "Approved" : "Not Approved"%>
-</p>
-<% if available_seats(@bus)<=0 %>
-  <button class="btn btn-primary">Sold Out</button>
-<% else %>
-  <p>Seats: <%= available_seats(@bus) %> Available</p>
-  <%= link_to "Book Now", new_bus_reservation_path(@bus), class: "btn btn-primary" %>
-<% end %>
+  <%= link_to "<- Back to All Buses", buses_path, data: {turbo_frame: "_top"} %>
+  <h1><%= @bus.bus_owner.name %></h1>
+  <h3><%= @bus.source %> to <%= @bus.destination %></h3>
+  <p>Bus Number: <%= @bus.bus_number %></p>
+  <p>Date: <%= formatted_date(@bus.journey_date) %>, <%= formatted_time(@bus.depart_time) %></p>
+  <p>Status: <%= @bus.approved? ? "Approved" : "Not Approved"%>
+  </p>
+    <% if available_seats(@bus)<=0 %>
+      <button class="btn btn-primary">Sold Out</button>
+    <% else %>
+      <p>Seats: <%= available_seats(@bus) %> Available</p>
+      <%= link_to "Book Now", new_bus_reservation_path(@bus), class: "btn btn-primary"%>
+    <% end %>
 <% if user_signed_in? %>
   <% if policy(@bus).edit? %>
     <%= link_to "Edit Bus", edit_bus_path, class: "btn btn-primary" %>

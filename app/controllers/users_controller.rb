@@ -8,6 +8,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @reservations = current_user.reservations.paginate(page: params[:page], per_page: 5)
+    @reservations = current_user.reservations.upcoming.paginate(page: params[:page], per_page: 5)
   end
 end

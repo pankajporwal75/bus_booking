@@ -3,13 +3,13 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   def otp_verification
-    @user = User.find_by(email: params[:user][:email])
-    @email = params[:user][:email]
-    if @user.present? && @user.valid_password?(params[:user][:password])
+    @user = User.find_by(email: params[:email])
+    @email = params[:email]
+    if @user.present? && @user.valid_password?(params[:password])
       @user.send_otp_email
       flash[:notice] = "Please check for the OTP sent to your email address."
     else
-      render :new
+      redirect_to new_user_session_path
       flash[:alert] = "Invalid Email/Password"
     end
   end
@@ -37,6 +37,7 @@ class Users::SessionsController < Devise::SessionsController
       flash[:notice] = "Welcome Admin"
       admin_dashboard_path
     else
+      flash[:notice] = "Welcome #{resource.name}!"
       buses_path
     end
   end

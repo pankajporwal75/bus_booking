@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_scope :user do
-    patch "/verification", to: "users/sessions#otp_verification", as: :verify_login
+    patch "/verification/", to: "users/sessions#otp_verification", as: :verify_login
     patch "/verificatin/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
   end
 

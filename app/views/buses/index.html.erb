@@ -1,18 +1,22 @@
-<% if user_signed_in? %>
-  <% if policy(current_user).is_admin? %>
-    <%= link_to "<- Back to Dashboard", admin_dashboard_path %>
+  <% if user_signed_in? %>
+    <% if policy(current_user).is_admin? %>
+      <%= link_to "<- Back to Dashboard", admin_dashboard_path %>
+    <% end %>
   <% end %>
+  <h2>Search Bus</h2>
+  <%= render "search" %>
+  <br>
+  <% if @buses.present? %>
+  <h2 class = "heading">Available Buses</h2>
+    <%= render "table", buses: @buses %>
+    <% else %>
+  <%= render 'buses/emptystate' %>
 <% end %>
-<h2>Search Bus</h2>
-<%= render "search" %>
-<br>
-<h2 class = "heading">Available Buses</h2>
-<%= render "table", buses: @buses %>
-<div class="flickr_pagination">
-  <%= will_paginate @buses %>
-</div>
-<% if user_signed_in? %>
-  <% if policy(current_user).is_bus_owner? %>
-    <%= link_to "Add New Bus", new_bus_path, class: "btn btn-primary" %>
+  <div class="flickr_pagination">
+    <%= will_paginate @buses %>
+  </div>
+  <% if user_signed_in? %>
+    <% if policy(current_user).is_bus_owner? %>
+      <%= link_to "Add New Bus", new_bus_path, class: "btn btn-primary" %>
+    <% end %>
   <% end %>
-<% end %>

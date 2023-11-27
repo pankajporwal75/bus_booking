@@ -47,7 +47,7 @@ RSpec.describe Users::SessionsController do
   end
   
   describe 'PATCH #resend_otp' do
-    let(:user) {create(:user, email: 'pankaj.porwal@gemsessence.com0')}
+    let(:user) {create(:user, email: 'pankaj.porwal@gemsessence.com')}
     it 'should generate a new otp' do
       old_otp = user.otp
       old_time = user.otp_sent_at

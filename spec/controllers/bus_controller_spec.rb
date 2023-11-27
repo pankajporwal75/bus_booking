@@ -49,6 +49,7 @@ RSpec.describe BusesController do
       it "should create a new bus" do
         sign_in(bus_owner_user)
         valid_params = {bus: attributes_for(:bus)}
+        debugger
         post :create, params: valid_params
         expect(Bus.count).to be > count
         is_expected.to respond_with(:redirect)

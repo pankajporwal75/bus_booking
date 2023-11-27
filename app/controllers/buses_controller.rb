@@ -1,6 +1,6 @@
 class BusesController < ApplicationController
 
-  before_action :authenticate_user!, only: [:show]
+  before_action :authenticate_user!, only: [:show, :index]
   protect_from_forgery except: :search
 
   def index
@@ -42,14 +42,15 @@ class BusesController < ApplicationController
 
   def search
     date = params[:search_date]
+    # binding.pry
     if (date.present? && date > Time.now)
       @date = Date.parse(date)
       authorize current_user, :all_users?
       @buses = Bus.approved.on_date(@date)
       respond_to do |format|
         format.html
-          format.js
-        end
+        format.js
+      end
     else
       respond_to do |format|
         format.html {redirect_to buses_path, alert: "Enter valid date!!"}

@@ -13,3 +13,38 @@
  *= require_tree .
  *= require_self
  */
+ .turbo-progress-bar {
+  background: linear-gradient(to right, blue, pink);
+}
+
+.flash{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 5px 50px;
+  border-radius: 50px 50px 50px 50px;
+  animation: appear-then-fade 5s both;
+}
+
+@keyframes appear-then-fade {
+  0%, 100% {
+    opacity:0
+  }
+  5%, 60% {
+    opacity:1;
+  }
+  100% {
+    display: none;
+  }
+}
+
+.no_bus img{
+  height: 100px;
+  width: 100px;
+}
+
+.container{
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
