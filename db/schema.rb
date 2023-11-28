@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_20_133648) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_092700) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,7 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_133648) do
     t.string "source"
     t.string "destination"
     t.string "bus_number"
-    t.date "journey_date"
     t.time "depart_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -55,13 +54,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_133648) do
 
   create_table "reservations", force: :cascade do |t|
     t.date "date"
-    t.time "time"
-    t.integer "seats"
     t.integer "bus_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "seat_id"
     t.index ["bus_id"], name: "index_reservations_on_bus_id"
+    t.index ["seat_id"], name: "index_reservations_on_seat_id"
+  end
+
+  create_table "seats", force: :cascade do |t|
+    t.integer "seat_no"
+    t.integer "bus_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bus_id"], name: "index_seats_on_bus_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,4 +92,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_133648) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "buses", "users", column: "bus_owner_id"
   add_foreign_key "reservations", "buses"
+  add_foreign_key "reservations", "seats"
+  add_foreign_key "seats", "buses"
 end

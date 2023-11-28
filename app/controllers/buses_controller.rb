@@ -6,15 +6,22 @@ class BusesController < ApplicationController
   def index
     if user_signed_in?
       if current_user.admin?
-        @buses = Bus.upcoming.paginate(page: params[:page], per_page: 5)
+        @buses = Bus.paginate(page: params[:page], per_page: 5)
       elsif current_user.bus_owner?
-        @buses = current_user.buses.upcoming.paginate(page: params[:page], per_page: 5)
+        @buses = current_user.buses.paginate(page: params[:page], per_page: 5)
       else
-        @buses = Bus.approved.upcoming.paginate(page: params[:page], per_page: 5)
+        @buses = Bus.approved.paginate(page: params[:page], per_page: 5)
       end
     else
-      @buses = Bus.approved.upcoming.paginate(page: params[:page], per_page: 5)
+      @buses = Bus.approved.paginate(page: params[:page], per_page: 5)
     end
+  end
+
+  def reservations_list
+    @date = params[:date]
+    @bus = Bus.find(params[:bus_id])
+    @reservations = @bus.reservations.where(date: @date)
+    authorize @bus
   end
 
   def show
@@ -83,6 +90,6 @@ class BusesController < ApplicationController
 
   private
   def bus_params
-    params.require(:bus).permit(:source, :destination, :depart_time, :bus_number, :journey_date, :capacity)
+    params.require(:bus).permit(:source, :destination, :depart_time, :bus_number, :capacity)
   end
 end

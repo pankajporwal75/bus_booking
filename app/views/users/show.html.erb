@@ -14,35 +14,35 @@
     <%= link_to "Edit Account", edit_user_registration_path, class: "button edit"  unless current_user.admin?%>
   </div>
   <% if @reservations.present? %>
-    <h3>Reservations</h3>
+    <h3>My Tickets</h3>
     <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">S No.</th>
           <th scope="col">Name</th>
-          <th scope="col">Seats</th>
+          <th scope="col">Seat Number</th>
           <th scope="col">Pick-up</th>
           <th scope="col">Drop</th>
-          <th scope="col">Created at</th>
+          <th scope="col">Boarding Time</th>
+          <th scope="col">Date</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <% count = 0 %>
       <% @reservations.each do |ticket| %>
-        <% if ticket.bus.journey_date > Time.now %>
           <tbody>
             <tr>
               <% count+=1 %>
               <th scope="row"><%= count %></th>
               <td><%= ticket.user.name %></td>
-              <td><%= ticket.seats %></td>
+              <td><%= ticket.seat.seat_no %></td>
               <td><%= ticket.bus.source %></td>
               <td><%= ticket.bus.destination %></td>
-              <td><%= formatted_date(ticket.created_at) %></td>
+              <td><%= formatted_time(ticket.bus.depart_time) %></td>
+              <td><%= formatted_date(ticket.date) %></td>
               <td><%= button_to "Cancel", user_reservation_path(current_user, ticket), method: :delete, class: "btn btn-primary" %></td>
             </tr>
           </tbody>
-        <% end %>
       <% end %>
     </table>
   <% else %>

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     patch "/verification/", to: "users/sessions#otp_verification", as: :verify_login
-    patch "/verificatin/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
+    patch "/verification/resend_otp", to: "users/sessions#resend_otp", as: :resend_otp
   end
 
   devise_for :users, controllers: {
@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :buses do
     resources :reservations
   end
+  get "/get_resv_list/:bus_id", to: "buses#reservations_list", as: :get_resv_list
   get 'admin/dashboard', to: "admins#index", as: :admin_dashboard
   get 'admin/users', to: "users#index", as: :all_users
   get 'admin/bus_owners', to: "bus_owners#index", as: :all_bus_owners

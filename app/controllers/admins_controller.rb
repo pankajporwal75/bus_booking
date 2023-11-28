@@ -4,7 +4,7 @@ class AdminsController < ApplicationController
   def index
     @users = User.user
     @bus_owners = BusOwner.all
-    @buses = Bus.upcoming
+    @buses = Bus.all
   end
 
   def change_status
