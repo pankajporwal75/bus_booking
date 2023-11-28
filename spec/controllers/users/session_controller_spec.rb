@@ -18,7 +18,7 @@ RSpec.describe Users::SessionsController do
         user = create(:user, email: 'pankaj.porwal@gemsessence.com', password: 'password')
         @request.env["devise.mapping"] = Devise.mappings[:user]
         patch :otp_verification, params: {user: {email: 'pankaj.porwal@gemsessence.com', password: 'wrong password'}}
-        is_expected.to render_template('new')
+        is_expected.to redirect_to new_user_session_path
       end
     end
   end

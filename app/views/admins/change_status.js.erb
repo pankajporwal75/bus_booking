@@ -1,8 +1,9 @@
 console.log("#bus-status-<%=@bus.id%>")
 var button = $("#bus-status-<%=@bus.id%>");
 button.text('<%= j @bus.approved? ? "Disapprove" : "Approve" %>');
-<%# alert("Bus Status Changed"); %>
-
-var flashContainer = $(".flash_message");
-flashContainer.empty(); // Clear previous flash messages
-flashContainer.append('<%= j render partial: "layouts/flash" %>');
+var flashContainer = $(".flash");
+console.log(flashContainer)
+flashContainer.empty(); 
+$(".flash").remove();
+var content_box = $(".content")
+content_box.prepend('<%= j render partial: "layouts/flash" %>');

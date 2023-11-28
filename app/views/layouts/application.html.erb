@@ -11,10 +11,8 @@
   <body>
     <%= render "layouts/header" %>
     <div class="content ">
-      <%= turbo_frame_tag "flash_messages" do%>
         <%=render "layouts/flash"%>
-      <% end %>
-    <%= yield %>
+        <%= yield %>
     </div>
   </body>
 </html>

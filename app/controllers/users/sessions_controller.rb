@@ -29,6 +29,7 @@ class Users::SessionsController < Devise::SessionsController
   def resend_otp
     @user = User.find_by(email: params[:email])
     @user.send_otp_email
+    flash.now[:notice] = "A new otp is sent to your registered email address."
     render :otp_verification, locals: { email: @user.email, notice: "A new OTP is sent to your registered email." }
   end
 
