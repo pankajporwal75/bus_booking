@@ -13,38 +13,15 @@
   <div class="actions">
     <%= link_to "Edit Account", edit_user_registration_path, class: "button edit"  unless current_user.admin?%>
   </div>
+  <% if @today_tickets.present? %>
+    <h3>Today's Trips</h3>
+    <%= render 'reservations', reservations: @today_tickets%>
+    <% else %>
+    <h3 class="display-6">You have no trips for today</h3>
+  <% end %>
   <% if @reservations.present? %>
-    <h3>My Tickets</h3>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">S No.</th>
-          <th scope="col">Name</th>
-          <th scope="col">Seat Number</th>
-          <th scope="col">Pick-up</th>
-          <th scope="col">Drop</th>
-          <th scope="col">Boarding Time</th>
-          <th scope="col">Date</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <% count = 0 %>
-      <% @reservations.each do |ticket| %>
-          <tbody>
-            <tr>
-              <% count+=1 %>
-              <th scope="row"><%= count %></th>
-              <td><%= ticket.user.name %></td>
-              <td><%= ticket.seat.seat_no %></td>
-              <td><%= ticket.bus.source %></td>
-              <td><%= ticket.bus.destination %></td>
-              <td><%= formatted_time(ticket.bus.depart_time) %></td>
-              <td><%= formatted_date(ticket.date) %></td>
-              <td><%= button_to "Cancel", user_reservation_path(current_user, ticket), method: :delete, class: "btn btn-primary" %></td>
-            </tr>
-          </tbody>
-      <% end %>
-    </table>
+    <h3>All Tickets</h3>
+    <%= render 'reservations', reservations: @reservations %>
   <% else %>
     <%= render "reservations/emptystate" %>
   <% end %>

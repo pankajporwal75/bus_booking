@@ -4,12 +4,22 @@
     <% end %>
   <% end %>
   <br>
-  <% if @buses.present? %>
-  <h2 class = "heading">Available Buses</h2>
-    <%= render "table", buses: @buses %>
-    <% else %>
-  <%= render 'buses/emptystate' %>
-<% end %>
+  <div class = "card-body ">
+    <%= render 'search' %>
+    <br>
+  </div>
+    <% if @buses.present? %>
+      <% if current_user.bus_owner? %>
+        <h2 class = "heading">My Buses</h2>
+      <% else %>
+        <h2 class = "heading">Available Buses</h2>
+      <% end %>
+  <div class="data">
+      <%= render "table", buses: @buses %>
+</div>
+      <% else %>
+    <%= render 'buses/emptystate' %>
+  <% end %>
   <div class="flickr_pagination">
     <%= will_paginate @buses %>
   </div>

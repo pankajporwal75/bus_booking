@@ -1,0 +1,9 @@
+<% if @reservations.present? %>
+  $('.data').empty();
+  $('.heading').html("Showing reservations for <%= j @date.strftime("%d %b,%Y") %>");
+  $('.data').html('<%= j render partial: "reservations", locals: { reservations: @reservations } %>');
+<% else %>
+  $('.data').empty();
+  $('.heading').html("No Reservations available for the selected date")
+<% end %>
+$('.all-resv').removeClass("visually-hidden");

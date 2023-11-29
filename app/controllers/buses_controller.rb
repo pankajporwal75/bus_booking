@@ -26,7 +26,8 @@ class BusesController < ApplicationController
 
   def show
     @bus = Bus.find(params[:id])
-    @reservations = @bus.reservations.paginate(page: params[:page], per_page: 5)
+    @reservations = @bus.reservations.order(created_at: :desc).paginate(page: params[:page], per_page: 5)
+    @today_tickets = @bus.reservations.where(date: Date.today)
     authorize @bus
   end
 
@@ -48,21 +49,12 @@ class BusesController < ApplicationController
   end
 
   def search
-    date = params[:search_date]
-    # binding.pry
-    if (date.present? && date > Time.now)
-      @date = Date.parse(date)
-      authorize current_user, :all_users?
-      @buses = Bus.approved.on_date(@date)
-      respond_to do |format|
-        format.html
-        format.js
-      end
-    else
-      respond_to do |format|
-        format.html {redirect_to buses_path, alert: "Enter valid date!!"}
-          format.js
-        end
+    @source = params[:source]
+    @destination = params[:destination]
+    @buses = Bus.where(source: @source.capitalize, destination: @destination.capitalize)
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 

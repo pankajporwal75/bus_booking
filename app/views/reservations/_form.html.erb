@@ -1,7 +1,7 @@
-<div class = "container mt-5">
+<%# <div class = "container mt-5"> %>
 	<div class = "row justify-content-center text-center">
 		<div class = "col-md-6">
-			<div class = "card">
+			<%# <div class = "card"> %>
 				<div class = "card-body">
 					<%= form_with(url: :new_bus_reservation, method: :get) do |f| %>
 						<h5 class = "card-title">
@@ -14,11 +14,10 @@
 						<%= f.submit "Check Availability", class: "btn btn-outline-success mt-2", data: { turbo_frame: "available_seats" } %>
 					<% end %>
 				</div>
-			</div>
+			<%# </div> %>
 		</div>
 	</div>
-</div>
-
+<%# </div> %>
 <%= turbo_frame_tag "available_seats" do %>
 	<% unless @bus.nil? || @reservation.nil? %>
 	<div class = "container mt-4 text-center">
@@ -29,9 +28,9 @@
 			<%= form_with model: [@bus, @reservation] do |f| %> 
 				<h5 class = "card-title text-decoration-underline mb-4">Select preferred seats</h5>
 				<div class="seat_map">
-					<%= f.collection_check_boxes(:seat_id, @all_seats, :id, :seat_no, { include_hidden: false }, class: "seat-checkbox", item_wrapper_class: "form-check", item_label_class: "form-check-label") do |c| %>
-          <%= c.check_box(disabled: c.object.reserved?) %>
-          <%= c.label %>
+					<%= f.collection_check_boxes(:seat_id, @all_seats, :id, :seat_no, { include_hidden: false }, class: "seat-checkbox", item_wrapper_class: "form-check", item_label_class: "form-check-label") do |check| %>
+          <%= check.check_box(disabled: check.object.reserved?(@date)) %>
+          <%= check.label class: "opacity-100"%>
           <% end %>
 				</div>
 				<%= f.hidden_field :bus_id, value: @bus.id %>

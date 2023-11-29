@@ -2,7 +2,13 @@ class Seat < ApplicationRecord
   belongs_to :bus
   has_many :reservations
 
-  def reserved?
-    reservations.exists? # Check if there are any reservations associated with this seat
+  def reserved?(date)
+    reservations = bus.reservations.where(date: date)
+    seat_ids = []
+    reservations.each do |reservation|
+      seat_ids << reservation.seat_id
+    end
+    return true if seat_ids.include?(self.id)
+    false
   end
 end

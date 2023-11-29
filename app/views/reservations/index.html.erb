@@ -1,22 +1,14 @@
 <%= link_to "<- Back", bus_path(@bus) %>
-<h1>Reservations for <%= @bus.bus_number %></h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">S No.</th>
-      <th scope="col">User</th>
-      <th scope="col">Date</th>
-      <th scope="col">Number of Seats</th>
-    </tr>
-  </thead>
-  <% @reservations.each do |reservation| %>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td><%= reservation.user.name %></td>
-        <td><%= formatted_date(reservation.bus.journey_date) %></td>
-        <td><%= reservation.seats %></td>
-      </tr>
-    </tbody>
-  <% end %>
-</table>
+<h1 class="text-center">Reservations for <%= @bus.bus_number %></h1>
+<div class = "row justify-content-center text-center">
+		<div class = "col-md-6">
+				<div class = "card-body">
+          <%= render 'search' %>
+          <br>
+<%= link_to "All Reservations", bus_reservations_path(@bus), class:"btn btn-primary visually-hidden all-resv" %>
+				</div>
+		</div>
+</div>
+<br>
+<h2 class = "heading">All Reservations</h2>
+<%= render 'reservations', reservations: @reservations %>

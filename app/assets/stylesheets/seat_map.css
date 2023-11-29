@@ -4,40 +4,18 @@
   justify-content: space-evenly;
 }
 
-/* Style for individual seat checkbox and label */
-/* .form-check {
-  margin: 5px;
-  text-align: center;
-} */
-
-/* Style for the label to make it visually appealing */
-/* .form-check label {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  cursor: pointer;
-} */
-
-/* Style for selected seats */
-/* .form-check input:checked + label {
-  background-color: #4caf50;
-  color: white;
-} */
-
 /* Optional: Style for disabled seats */
-.seat-checkbox input:disabled + label {
+.seat-checkbox:disabled + label {
   background-color: #d33939;
   cursor: not-allowed;
 }
 
 /* Optional: Add hover effect for better user experience */
-/* .form-check label:hover {
-  background-color: #ddd;
-} */
+.seat-checkbox:not(:disabled):not(:checked):hover + label {
+  background-color: #01831780;
+  cursor: pointer;
+}
+
 .seat-checkbox {
   display: none;
 }
@@ -46,18 +24,19 @@
   display: inline-block;
   width: 60px;
   height: 60px;
+  cursor: pointer;
   border: 2px solid #ccc;
+  color: black;
   border-radius: 5px;;
   margin: 8px;
   text-align: center;
   line-height: 60px;
   font-weight: bold;
-  cursor: pointer;
   transition: background-color 0.2s;
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 .seat-checkbox:checked + label,.seat-checkbox:hover {
-  background-color: #018316; 
+  background-color: #026e14; 
   color: #000000;
 }

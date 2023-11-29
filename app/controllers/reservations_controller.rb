@@ -2,6 +2,11 @@ class ReservationsController < ApplicationController
 
   before_action :authenticate_user!
 
+  def index
+    @bus = Bus.find(params[:bus_id])
+    @reservations = Reservation.where(bus_id: @bus.id).order(date: :desc)
+  end
+
   def new
     @bus = Bus.find(params[:bus_id])
     @user = current_user
@@ -11,6 +16,7 @@ class ReservationsController < ApplicationController
       @date = params[:date] || Date.today
       @available_seats = Reservation.seats_on_date(@bus, @date)
       @all_seats = @bus.seats.all
+      @booked_seats = Reservation.booked_on_date(@bus, @date)
     else
       redirect_to @bus, alert: "Bus not approved!"
     end
@@ -22,12 +28,13 @@ class ReservationsController < ApplicationController
     date = params[:reservation][:date]
     parse_date = Date.parse(date)
     @reservation = Reservation.create_reservations(current_user.id, @bus.id, seat_ids, parse_date)
+    # binding.pry
     if @reservation
       # ReservationMailer.create_reservation_email(@reservation).deliver_now
       redirect_to user_path(current_user), notice: "Reservation Successful"
     else
-      flash[:alert] = "Select Date & Seats"
-      render "new", status: :unprocessable_entity
+      flash[:alert] = "Select valid date & seats"
+      redirect_to new_bus_reservation_path(@bus), status: :unprocessable_entity
     end
   end
 
@@ -39,6 +46,25 @@ class ReservationsController < ApplicationController
       redirect_to current_user, status: :see_other, notice: "Ticket Cancelled"
     else
       redirect_to user_path(current_user), status: :see_other, notice: "Ticket cannot be cancelled."
+    end
+  end
+
+  def search
+    date = params[:search_date]
+    @bus = Bus.find(params[:bus_id])
+    if (date.present?)
+      @date = Date.parse(date)
+      authorize current_user, :all_users?
+      @reservations = @bus.reservations.where(date: @date)
+      respond_to do |format|
+        format.html
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html {redirect_to buses_path, alert: "Enter valid date!!"}
+          format.js
+        end
     end
   end
 
