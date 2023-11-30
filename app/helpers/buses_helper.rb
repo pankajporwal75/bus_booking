@@ -3,4 +3,5 @@ module BusesHelper
     @occupied = bus.reservations.count
     bus.capacity - @occupied
   end
+  
 end

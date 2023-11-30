@@ -3,6 +3,6 @@ Sorry, Following bus listed by you is disapproved at BusReservation.com
 Bus Details: <%= @bus.bus_owner.name%> - <%= @bus.bus_number %>.
 Route: <%= @bus.source%> to <%= @bus.destination %>
 Number of Seats: <%= @bus.capacity%>
-Date: <%= formatted_date(@bus.journey_date)%>
+Date: <%= formatted_time(@bus.depart_time)%>
 Please Log in to BusReservation.com to see more details.
 Thanks for doing business with us, and have a great day!

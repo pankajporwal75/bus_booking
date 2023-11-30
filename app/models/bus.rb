@@ -7,8 +7,9 @@ class Bus < ApplicationRecord
   #Validations
   validates :source, presence: true
   validates :destination, presence: true
-  validates :capacity, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :capacity, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 10, less_than_or_equal_to: 50 }
   validates :depart_time, presence: true
+  validates :bus_number, presence: true
   validate :different_source_and_destination
 
   #Callbacks
@@ -46,6 +47,11 @@ class Bus < ApplicationRecord
     elsif capacity < initial_no_of_seat
       seats.where(bus_id: id).where(" seat_no > ? ", capacity).destroy_all
     end
+  end
+
+  def departed?
+    return true if (self.depart_time.strftime("%H:%M:%S")) < (Time.now.strftime("%H:%M:%S"))
+    false
   end
   
   # def available_seats

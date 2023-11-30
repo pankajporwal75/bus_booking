@@ -27,7 +27,7 @@ class BusesController < ApplicationController
   def show
     @bus = Bus.find(params[:id])
     @reservations = @bus.reservations.order(created_at: :desc).paginate(page: params[:page], per_page: 5)
-    @today_tickets = @bus.reservations.where(date: Date.today)
+    @today_tickets = @bus.reservations.where(date: Date.today).paginate(page: params[:page], per_page: 5)
     authorize @bus
   end
 
@@ -51,7 +51,13 @@ class BusesController < ApplicationController
   def search
     @source = params[:source]
     @destination = params[:destination]
-    @buses = Bus.where(source: @source.capitalize, destination: @destination.capitalize)
+    if @source.present? && @destination.present?
+      @buses = Bus.where(source: @source.capitalize, destination: @destination.capitalize)
+    elsif @source.present? && !@destination.present?
+      @buses = Bus.where(source: @source.capitalize)
+    elsif !@source.present? && @destination.present?
+      @buses = Bus.where(destination: @destination.capitalize)
+    end
     respond_to do |format|
       format.html
       format.js

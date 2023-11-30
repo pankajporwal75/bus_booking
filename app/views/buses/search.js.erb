@@ -2,6 +2,9 @@
   $('.data').empty();
   $('.heading').html("Showing buses for <%= j @source%> to <%= j @destination %>");
   $('.data').html('<%= j render partial: "table", locals: { buses: @buses } %>');
+<% elsif @source.blank? && @destination.blank? %>
+  $('.data').empty();
+  $('.heading').html("Please enter source and destination to find bus.")
 <% else %>
   $('.data').empty();
   $('.heading').html("No Bus Available for the selected route.  ")

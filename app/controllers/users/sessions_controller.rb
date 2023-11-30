@@ -37,6 +37,9 @@ class Users::SessionsController < Devise::SessionsController
     if resource.admin?
       flash[:notice] = "Welcome Admin"
       admin_dashboard_path
+    elsif resource.bus_owner?
+      flash[:notice] = "Welcome #{resource.name}!"
+      user_path(resource)
     else
       flash[:notice] = "Welcome #{resource.name}!"
       buses_path

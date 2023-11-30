@@ -2,7 +2,7 @@ class ReservationPolicy < ApplicationPolicy
   attr_reader :user, :record
 
     def index?
-      user.bus_owner? && bus.bus_owner.id == user.id
+      user.bus_owner? && record.bus_owner.id == user.id
     end
 
     def new?

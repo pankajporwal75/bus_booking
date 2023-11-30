@@ -320,6 +320,10 @@ section.user {
       &.delete {
         @extend .btn-danger;
       }
+
+      &.new {
+        @extend .btn-primary;
+      }
     }
   }
 

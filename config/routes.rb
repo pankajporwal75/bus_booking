@@ -10,16 +10,14 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
   }
   root to: "buses#index"
-  resources :bus_owners do
-    resources :buses
-  end
+  resources :bus_owners
   resources :users do
     resources :reservations
   end
   resources :buses do
     resources :reservations
   end
-  get "/get_resv_list/:bus_id", to: "buses#reservations_list", as: :get_resv_list
+  # get "/get_resv_list/:bus_id", to: "buses#reservations_list", as: :get_resv_list
   get 'admin/dashboard', to: "admins#index", as: :admin_dashboard
   get 'admin/users', to: "users#index", as: :all_users
   get 'admin/bus_owners', to: "bus_owners#index", as: :all_bus_owners

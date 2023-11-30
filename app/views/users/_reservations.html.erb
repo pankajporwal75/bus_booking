@@ -26,7 +26,7 @@
               <td><%= formatted_time(ticket.bus.depart_time) %></td>
               <td><%= formatted_date(ticket.date) %></td>
               <td><% if ticket.date < Date.today %>
-                    <button class="btn btn-success">Complete</button>
+                    <button class="btn btn-success disabled">Done</button>
                   <% else %>
                     <%= button_to "Cancel", user_reservation_path(current_user, ticket), method: :delete, class: "btn btn-primary" %>
                   <% end %>

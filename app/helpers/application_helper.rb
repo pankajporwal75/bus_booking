@@ -3,6 +3,10 @@ module ApplicationHelper
     date.strftime("%d %b, %Y")
   end
 
+  def format_time(time)
+    time.strftime("%H:%M:%S")
+  end
+
   def formatted_time(time)
     time.strftime("%I:%M %p")
   end

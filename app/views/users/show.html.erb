@@ -1,3 +1,6 @@
+<div class = "row justify-content-center text-center">
+		<%# <div class = "col-md-6"> %>
+				<div class = "card-body">
 <section class="user">
   <div class="profile-image">
     <%= profile_image(current_user) %>
@@ -11,7 +14,11 @@
     <%= link_to "Bus Owners", all_bus_owners_path, class: "btn btn-primary" %>
   <% end %>
   <div class="actions">
+  <% if policy(current_user).is_bus_owner? %>
+    <%= link_to "My Buses", buses_path, class: "button new" %>
     <%= link_to "Edit Account", edit_user_registration_path, class: "button edit"  unless current_user.admin?%>
+    <%= link_to "Add New Bus", new_bus_path, class: "button new" %>
+  <% end %>
   </div>
   <% if @today_tickets.present? %>
     <h3>Today's Trips</h3>
@@ -30,3 +37,6 @@
     <%= will_paginate @reservations %>
   </div>
 </section>
+				</div>
+		<%# </div> %>
+</div>

@@ -10,25 +10,17 @@
   <% if policy(@bus).edit? %>
     <%= link_to "Edit Bus", edit_bus_path, class: "btn btn-primary" %>
     <%= button_to "Cancel Bus", bus_path(@bus), method: :delete, class: "btn btn-primary" %>
+    <%= link_to "View all Reservations", bus_reservations_path(@bus), class: "btn btn-primary" %>
     <br>
     <br>
     <% if @today_tickets.present? %>
     <h4>Today's Tickets for this bus</h4>
     <%= render 'reservations', reservations: @today_tickets %>
     <div class="flickr_pagination">
-      <%= will_paginate @reservations %>
+      <%= will_paginate @today_tickets %>
     </div>
-    <%= link_to "View all Reservations", bus_reservations_path(@bus), class: "btn btn-primary" %>
     <% else %>
-    <% if @reservations.present? %>
-      <h3>Reservations</h3>
-      <%= render 'reservations', reservations: @reservations %>
-    <% else %>
-      <h3>No Reservations for this bus yet.</h3>
-    <% end %>
-    <div class="flickr_pagination">
-      <%= will_paginate @reservations %>
-    </div>
+    <h4 >No reservations for today</h4>
     <% end %>
   <% end %>
 <% end %>

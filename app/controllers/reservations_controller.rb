@@ -3,17 +3,21 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @bus = Bus.find(params[:bus_id])
-    @reservations = Reservation.where(bus_id: @bus.id).order(date: :desc)
+      @bus = Bus.find(params[:bus_id])
+      @reservations = Reservation.where(bus_id: @bus.id).order(date: :desc)
+      @bus_owner = @bus.bus_owner
+      authorize (@bus), policy_class: ReservationPolicy
   end
 
   def new
     @bus = Bus.find(params[:bus_id])
     @user = current_user
+    time = @bus.depart_time
+    # b
     authorize @user, policy_class: ReservationPolicy
     if @bus.approved?
       @reservation = @bus.reservations.new
-      @date = params[:date] || Date.today
+      @date = params[:date] || (@bus.depart_time.strftime("%H:%M:%S") < Time.now.strftime("%H:%M:%S") ? Date.tomorrow : Date.today)
       @available_seats = Reservation.seats_on_date(@bus, @date)
       @all_seats = @bus.seats.all
       @booked_seats = Reservation.booked_on_date(@bus, @date)

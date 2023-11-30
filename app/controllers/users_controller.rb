@@ -10,5 +10,6 @@ class UsersController < ApplicationController
   def show
     @reservations = current_user.reservations.order(created_at: :desc).paginate(page: params[:page], per_page: 5)
     @today_tickets = current_user.reservations.where(date: Date.today)
+    authorize current_user
   end
 end
