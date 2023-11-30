@@ -29,7 +29,7 @@ $box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.09);
 
 $body-color: $black;
 $body-bg: $off-white;
-$primary: $red;
+$primary: $blue;
 $secondary: $dark-gray;
 $min-contrast-ratio: 4;
 $input-bg: white;
@@ -633,12 +633,12 @@ section.errors {
 }
 
 .flickr_pagination a {
-  border: 1px solid #ebbebe;
+  border: 1px solid $blue;
   color: #000000;
   text-decoration: none;
   border-radius: 10px;
   margin-inline: 2px;
-  background-color: #f1cfd25b;
+  background-color: #cfe1f15b;
   transition-duration: 200ms;
 }
 
