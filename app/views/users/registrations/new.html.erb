@@ -21,6 +21,11 @@
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
+  
+  <div class="field">
+    <%= f.label :select_role %>
+    <%= f.select :role, { "User" => "user", "Bus Owner" => "bus_owner" }, data: { id: "role" }, class: "form-control status-select" %>
+  </div>
 
   <div class="field">
     <%= f.label :password_confirmation %><br />

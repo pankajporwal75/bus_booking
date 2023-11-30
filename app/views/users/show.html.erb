@@ -14,9 +14,9 @@
     <%= link_to "Bus Owners", all_bus_owners_path, class: "btn btn-primary" %>
   <% end %>
   <div class="actions">
+    <%= link_to "Edit Account", edit_user_registration_path, class: "button edit"  unless current_user.admin?%>
   <% if policy(current_user).is_bus_owner? %>
     <%= link_to "My Buses", buses_path, class: "button new" %>
-    <%= link_to "Edit Account", edit_user_registration_path, class: "button edit"  unless current_user.admin?%>
     <%= link_to "Add New Bus", new_bus_path, class: "button new" %>
   <% end %>
   </div>
