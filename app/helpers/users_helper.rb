@@ -1,5 +1,5 @@
 module UsersHelper
   def bus_time(bus)
-    bus.journey_date.strftime("%d %b, %Y")
+    bus.depart_time.strftime("%H:%M:%S")
   end
 end

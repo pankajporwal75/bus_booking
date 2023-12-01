@@ -8,9 +8,9 @@ RSpec.shared_examples 'a rendered template' do |template|
 end
 
 RSpec.describe BusesController do
-  let(:user) {create :user}
+  let(:user) {create(:user, :user)}
   let(:admin_user) {create(:user, role: :admin)}
-  let(:bus_owner_user) {create(:user, role: :bus_owner)}
+  let(:bus_owner_user) {create(:user, :bus_owner)}
   let(:bus) {create(:bus, bus_owner: bus_owner_user)}
 
   describe "GET #index" do
@@ -28,7 +28,8 @@ RSpec.describe BusesController do
       sign_in(user)
       get :show, params: {id: bus.id}
     end
-    it_behaves_like 'a rendered template', 'show'
+    # it_behaves_like 'a rendered template', 'show'
+    it {should render_template("show")}
     it {should route(:get, '/buses/1').to(action: :show, id: 1)}
     it_behaves_like 'a successful request'
   end
@@ -49,7 +50,6 @@ RSpec.describe BusesController do
       it "should create a new bus" do
         sign_in(bus_owner_user)
         valid_params = {bus: attributes_for(:bus)}
-        debugger
         post :create, params: valid_params
         expect(Bus.count).to be > count
         is_expected.to respond_with(:redirect)
@@ -111,7 +111,7 @@ RSpec.describe BusesController do
           bus_number: "MP13CB5906"
         }
       }
-      should permit(:source, :destination, :journey_date, :depart_time, :capacity, :bus_number).
+      should permit(:source, :destination, :depart_time, :capacity, :bus_number).
       for(:create, params: params).
         on(:bus)
       end

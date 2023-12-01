@@ -12,8 +12,6 @@ class ReservationsController < ApplicationController
   def new
     @bus = Bus.find(params[:bus_id])
     @user = current_user
-    time = @bus.depart_time
-    # b
     authorize @user, policy_class: ReservationPolicy
     if @bus.approved?
       @reservation = @bus.reservations.new
@@ -31,6 +29,7 @@ class ReservationsController < ApplicationController
     seat_ids = params[:reservation][:seat_id]
     date = params[:reservation][:date]
     parse_date = Date.parse(date)
+    # binding.pry
     @reservation = Reservation.create_reservations(current_user.id, @bus.id, seat_ids, parse_date)
     # binding.pry
     if @reservation
@@ -38,7 +37,7 @@ class ReservationsController < ApplicationController
       redirect_to user_path(current_user), notice: "Reservation Successful"
     else
       flash[:alert] = "Select valid date & seats"
-      redirect_to new_bus_reservation_path(@bus), status: :unprocessable_entity
+      redirect_to new_bus_reservation_path(@bus)
     end
   end
 

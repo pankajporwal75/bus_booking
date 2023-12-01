@@ -1,10 +1,11 @@
 class AdminsController < ApplicationController
-  before_action :require_admin
+  # before_action :require_admin
 
   def index
     @users = User.user
     @bus_owners = User.bus_owner
     @buses = Bus.all
+    authorize current_user, :is_admin?
   end
 
   def change_status

@@ -12,10 +12,10 @@ RSpec.describe AdminsController do
     end
     it {should render_template('index')}
     it 'assigns @buses, @users and @bus_owners' do
-      user1 = create(:user)
-      user2 = create(:user)
-      bus_owner1 = create(:bus_owner)
-      bus_owner2 = create(:bus_owner)
+      user1 = create(:user, :user)
+      user2 = create(:user, :user)
+      bus_owner1 = create(:user, :bus_owner)
+      bus_owner2 = create(:user, :bus_owner)
       bus1 = create(:bus, bus_owner: bus_owner1)
       bus2 = create(:bus, bus_owner: bus_owner2)
       expect(assigns(:users)).not_to be_nil
@@ -35,7 +35,7 @@ RSpec.describe AdminsController do
       end
 
       it 'should delete reservations if bus is disapproved' do
-        approved_bus = create(:bus, bus_owner: bus_owner, status: 'approved')
+        approved_bus = create(:bus, :approved, bus_owner: bus_owner)
         create_list(:reservation, 3, bus: approved_bus, user: user)
         sign_in(admin)
         patch :change_status, params: {bus_owner: bus_owner.id, id: approved_bus.id}, format: :js

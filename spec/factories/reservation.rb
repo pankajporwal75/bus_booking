@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :reservation do
-    seats {2}
+    date {Date.today}
+    association :seat, factory: :seat
     association :bus, factory: :bus
     association :user, factory: :user
   end

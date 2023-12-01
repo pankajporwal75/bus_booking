@@ -33,7 +33,9 @@ class Reservation < ApplicationRecord
   end
 
   def self.create_reservations(user_id, bus_id, seat_ids, date)
+    # binding.pry
     return false if seat_ids.blank?
+    return false if date == Date.today && Bus.find(bus_id).depart_time.strftime("%H:%M:%S") < Time.now.strftime("%H:%M:%S")
     reservations = seat_ids.map do |seat_id|
       return false if Reservation.seat_reserved?(seat_id, bus_id, date)
       Reservation.new(user_id: user_id, bus_id: bus_id, seat_id: seat_id, date: date)

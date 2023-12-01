@@ -38,7 +38,7 @@ class BusesController < ApplicationController
   end
 
   def create
-    owner = BusOwner.find(current_user.id)
+    owner = User.bus_owner.find(current_user.id)
     @bus = owner.buses.new(bus_params)
     authorize @bus
     if @bus.save
