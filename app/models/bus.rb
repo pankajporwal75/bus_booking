@@ -16,6 +16,7 @@ class Bus < ApplicationRecord
   after_create :initialize_seats
   after_update :adjust_seats
   before_destroy :delete_seats
+  before_save :capitalize_route
 
   # Enum
   enum status: { disapproved: 0, approved: 1 }
@@ -47,6 +48,11 @@ class Bus < ApplicationRecord
     elsif capacity < initial_no_of_seat
       seats.where(bus_id: id).where(" seat_no > ? ", capacity).destroy_all
     end
+  end
+
+  def capitalize_route
+    self.source = source.capitalize
+    self.destination = destination.capitalize
   end
 
   def departed?
